@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <title>ESOF 423</title>
+        <title>Esof 423</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<link rel="stylesheet" href="sign-up.css" type="text/css"/>
-        <script src="sign-up-validation.js"></script>
     </head>
-    <body onload="document.registration.userid.focus();">
+    <body>
       <h1>Sign Up</h1>
-      <form name='registration' onSubmit="return formValidation();">
+      <form name='registration'>
           <ul>
             <li><label for="userId">User id:</label></li>
-            <li><input type="text" name="userId" size="12" /></li>
-            <li><label for="name">Name:</label></li>
-            <li><input type="text" name="name" size="50" /></li>
+            <li><input type="text" id="uid" size="12" /></li>
+            <li><label for="namer">Name:</label></li>
+            <li><input type="text" id="un" size="50" /></li>
             <li><label for="email">Email:</label></li>
-            <li><input type="text" name="email" size="50" /></li>
-            <li><input type="submit" name="submit" value="Submit" /></li>
+            <li><input type="text" id="ue" size="50" /></li>
             </ul>
         </form>
+        <div class="clear"></div>
+        <button value="submit" onclick="formValidation()">Submit</button>
     </body>
+    <script src="signupvalidation.js"></script>
 </html>

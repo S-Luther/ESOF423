@@ -37,3 +37,9 @@ p {
 margin-left: 70px;
 font-weight: bold;
 }
+.clear{
+    clear: both;
+}
+button{
+    float: left;
+}
