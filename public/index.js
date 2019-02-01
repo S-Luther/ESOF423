@@ -2,7 +2,7 @@ var url = "https://esof-423.firebaseio.com/.json";
 var sendTo = "";
 var content = "{\"userID\":\"valueascsadasd\",\"name\":\"value\",\"email\":\"value@asdasd.asd\"}";
 function update() {
-    
+
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -12,7 +12,7 @@ function update() {
         .catch(err => {
             console.error('An error ocurred', err);
         })
-        
+
 }
 
 function sendToDB() {
@@ -28,4 +28,4 @@ function sendToDB() {
 }
 
 update();
-sendToDB();
+//sendToDB();
