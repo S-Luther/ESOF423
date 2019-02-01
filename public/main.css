@@ -42,6 +42,7 @@ li a {
   margin-top: 20px;
   line-height: 25px;
 }
+
 #quickstart-sign-in-status, #sign-in-status {
   font-weight: bold;
 }
@@ -102,9 +103,15 @@ h3 {
 
 #sign-in-button {
     margin-left: 10px;
-    color: inherit;
+    /* color: inherit;
+    background-color: blue; */
 }
 
 #github{
   color: white;
+}
+
+#submitbutton{
+  color: inherit;
+  background-color: inherit;
 }
