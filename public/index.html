@@ -3,24 +3,59 @@
     <head>
         <title>Esof 423</title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Material Design Theming -->
+        <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+        <link rel="stylesheet" href="main.css">
 		<link rel="stylesheet" href="" />
     </head>
     <body>
       <div id="text"></div>
       <form action="submission.html" method="POST">
+
+        <!-- Splash screen -->
+      <section id="page-splash">
         <h1>User Login</h1>
-					<section class="name">
-          <label for="userName">User ID</label>
-    			<input type="text" name="userName" id="userName">
-        </section>
+
+        <!-- Login Field -->
+        <form action="#">
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="sample1">
+            <label class="mdl-textfield__label" for="sample1">Username...</label>
+          </div>
+        </form>
+
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          Submit
+        </button>
         <hr>
-        <section class="submit">
-          <input type="submit" value="Submit">
+
+        <!-- Google Login -->
+      <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+
+        <section id="google-login">
+          <p>
+            Google login authentication
+          </p>
+          <div>
+            <form action="google-redirect.html">
+              <button id="sign-in-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign in with Google</button>
+            </form>
+          </div>
         </section>
-      </form>
-	    <a href="https://github.com/Quackbar/ESOF423">Link to github</a>
-      <h4>Version 0.0</h4>
+      </div>
+      <hr>
+      <section id="github">
+	       <a href="https://github.com/Quackbar/ESOF423" style="color:white">Link to github</a>
+      </section>
+      <h6>Version 0.0</h6>
+
+      
+
+      </section>
     </body>
     <script src="index.js"></script>
 </html>
