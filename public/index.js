@@ -1,6 +1,6 @@
 var url = "https://esof-423.firebaseio.com/.json";
 var sendTo = "";
-var content = "{\"test\" : \"Oh Hey\"}";
+var content = "{\"userID\":\"valueascsadasd\",\"name\":\"value\",\"email\":\"value@asdasd.asd\"}";
 function update() {
     
     fetch(url)
@@ -28,4 +28,4 @@ function sendToDB() {
 }
 
 update();
-//sendToDB();
+sendToDB();
