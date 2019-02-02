@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Esof 423</title>
+        <title>ESOF 423</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Material Design Theming -->
@@ -13,8 +13,8 @@
 		<link rel="stylesheet" href="" />
     </head>
     <body>
-      <div id="text"></div>
-      <form action="submission.html" method="POST">
+      <!-- <div id="text"></div>
+      <form action="submission.html" method="POST"> -->
 
         <!-- Splash screen -->
       <section id="page-splash">
@@ -22,8 +22,8 @@
 
         <!-- Login Field -->
         <section id="login-field">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-indigo.min.css" />
         <form action="#">
+          <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-indigo.min.css" />
           <div class="mdl-textfield mdl-js-textfield">
             <label class="mdl-textfield__label" for="uname">Username...</label>
             <input class="mdl-textfield__input" type="text" id="uname">
@@ -36,8 +36,15 @@
         </form>
         <section id="submitbutton">
           <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-            Submit
+            Sign In...
           </button>
+        </section>
+        <section id="newUser">
+          <form action="registration2.html">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+              Create New User
+            </button>
+          </form>
         </section>
       </section>
 
@@ -52,7 +59,7 @@
           </p>
           <div>
             <form action="google-redirect.html">
-              <button id="sign-in-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent"><i class="material-icons">account_circle</i> Sign in with Google</button>
+              <button id="sign-in-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored"><i class="material-icons">account_circle</i> Sign in with Google</button>
             </form>
           </div>
         </section>
@@ -61,6 +68,9 @@
       <section id="github">
 	       <a href="https://github.com/Quackbar/ESOF423" style="color:white">Link to github</a>
       </section>
+
+      <div id="text"></div>
+      <form action="submission.html" method="POST">
       <h6>Version 0.0</h6>
 
             <!-- Square card -->

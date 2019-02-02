@@ -47,6 +47,12 @@ li a {
   line-height: 25px;
 }
 
+.divider{
+    width:10px;
+    height:auto;
+    display:inline-block;
+}
+
 #quickstart-sign-in-status, #sign-in-status {
   font-weight: bold;
 }
@@ -121,13 +127,40 @@ h3 {
   align-items: center;
   display: flex;
   justify-content: center;
+  padding-top: 20px;
+}
+
+#newUser{
+  color: inherit;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#userinfo{
+  color: black;
+  font
+}
+
+#submitID{
+  width:20px;
+  padding-left: 0px;
+  padding-right: 20px:
+}
+
+#exit{
+  width:20px;
+  padding-left: 20px;
+  padding-right: 20px:
 }
 
 #login-field{
-  height: 200px;
-  padding-top: 80px;
+  height: 250px;
+  padding-top: 50px;
   padding-right: 50px;
-  padding-bottom: 80px;
+  padding-bottom: 50px;
   padding-left: 50px;
   border: 2px inherit;
   border-style: solid;
