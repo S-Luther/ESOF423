@@ -17,6 +17,8 @@
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
   background-color: #f5f5f5;
+  overflow: auto;
+  position: relative;
 }
 a {
   text-decoration: none;
@@ -88,7 +90,7 @@ h3 {
 }
 
 #page-splash {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -101,6 +103,7 @@ h3 {
     align-items: center;
     color: white;
     flex-direction: column;
+    overflow: visible;
 }
 
 #google-login {
@@ -165,4 +168,6 @@ h3 {
   border: 2px inherit;
   border-style: solid;
   border-radius: 5px;
+  overflow: visible;
+  position: absolute;
 }
