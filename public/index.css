@@ -13,7 +13,9 @@ li a {
   text-decoration: underline;
   color: #0288d1;
 }
+.mdl-textfield{
 
+}
 .fixed-background{
   background-image: url("background.jpg");
   height: 100%;
@@ -71,6 +73,10 @@ li a {
 
 .google-box{
   padding-top: 16px
+}
+
+#login-items{
+  flex-direction: column;
 }
 
 #googlebox{
