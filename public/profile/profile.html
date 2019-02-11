@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<!--
+	Indivisible by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html>
+	<head>
+		<title>Untitled</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body class="is-loading-0 is-loading-1">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Home -->
+					<article id="home" class="panel special">
+						<div class="image">
+							<img id="ppic" src="" alt="" data-position="center center" />
+						</div>
+						<div class="content">
+							<div class="inner">
+								<header>
+									<h1><div id="fname"></div><div id="lname"></div></h1>
+									<p><div id="email"></div><br />
+									<div id="btype"></div><br />
+									<div id="userId"></div><br /></p>
+								</header>
+								<nav id="nav">
+									<ul class="actions vertical special spinY">
+										<li><a href="#" class="button">Files</a></li>
+
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</article>
+
+      <script>
+      
+        
+        
+        
+      var url = "https://esof-423.firebaseio.com/Users/123456789";
+      var fname = "fname.json";
+      var lname = "lname.json";
+      var btype = "btype.json";
+      var email = "email.json";
+      var userId = "userId.json";
+      var ppic = "ppic.json";
+      
+      
+      fname= update(url + fname);
+      lname= update(lname);
+      btype= update(btype);
+      email= update(email);
+      userId= update(userId);
+      ppic= update(ppic);
+      
+      document.getElementById("fname").innerHTML = fname;
+      document.getElementById("lname").innerHTML = lname;
+      document.getElementById("btype").innerHTML = btype;
+      document.getElementById("email").innerHTML = email;
+      document.getElementById("userId").innerHTML = userId;
+      document.getElementById("ppic").src = ppic;
+      
+      
+      function update(value) {
+      
+          fetch(value)
+              .then(response => response.json())
+              .then(data => {
+                  console.log(data);
+                  return data;
+              })
+              .catch(err => {
+                console.error('An error ocurred', err);
+
+              })
+      
+      }
+        
+        
+      </script>
+
+
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
