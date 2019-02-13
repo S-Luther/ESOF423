@@ -27,5 +27,5 @@ function sendToDB() {
     xhttp.send(content);
 }
 
-update();
-sendToDB();
+//update();
+//sendToDB();

@@ -2,52 +2,58 @@ var url = "https://esof-423.firebaseio.com/.json";
 var sendTo = "";
 
 function formValidation() {
-    var id = document.getElementById("uid").value;
-    var uname = document.getElementById("un").value;
-    var uemail = document.getElementById("ue").value;
-    if(userid_validation(id,5,12)) {
-        if(allLetter(uname)) {
-            if(ValidateEmail(uemail)) {
-                var content = {userID: id,name: uname,email: uemail};
+    var name = document.getElementById("name").value;
+    var address = document.getElementById("address").value;
+    var city = document.getElementById("city").value;
+    var s = document.getElementById("state");
+    var state = s.options[s.selectedIndex].text;
+    var zip = document.getElementById("zip").value;
+    var phone = document.getElementById("phone").value;
+    
+    if(nameFormat(name)) {
+        if(addressFormat(address)) {
+            if(cityFormat(city)) {
+                var content = {name: name,address: address,city: city,state: state,zip: zip,phone: phone};
+                sendTo = name;
                 var myJSON = JSON.stringify(content);
-                // console.log(myJSON);
                 sendToDB(myJSON);
-            } 
+            }
         }
     }
 }
-function userid_validation(id,mx,my) {
-    var id_len = id.length;
-    if (id_len == 0 || id_len >= my || id_len < mx) {
-        alert("User Id should not be empty / length be between "+mx+" to "+my);
-        id.focus();
-        return false;
-    }
-    return true;
-}
-function allLetter(uname) {
+function nameFormat(name) {
     var letters = /^[A-Za-z]+$/;
-    if(uname.match(letters)) {
+    if(name.match(letters)) {
         return true;
     }
     else {
-        alert('Useruname must have alphabet characters only');
-        uname.focus();
+        alert('Name format error');
+        name.focus();
         return false;
     }
 }
-function ValidateEmail(uemail) {
-    var mailformat = /\S+@\S+\.\S+/;
-    if(uemail.match(mailformat)) {
+function addressFormat(address) {
+    var letters = /^[A-Za-z0-9'\.\-\s\,]+$/;
+    if(address.match(letters)) {
         return true;
     }
     else {
-        alert("You have entered an invalid email address!");
-        uemail.focus();
+        alert('Address format error');
+        address.focus();
         return false;
     }
 }
-
+function cityFormat(city) {
+    var letters = /^[A-Za-z]+$/;
+    if(city.match(letters)) {
+        return true;
+    }
+    else {
+        alert('City format error');
+        city.focus();
+        return false;
+    }
+}
 function sendToDB(content) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
