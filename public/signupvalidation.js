@@ -1,6 +1,7 @@
 var url = "https://esof-423.firebaseio.com/.json";
 var sendTo = "";
 
+
 function formValidation() {
     var id = document.getElementById("uid").value;
     var uname = document.getElementById("un").value;
@@ -12,10 +13,11 @@ function formValidation() {
                 var myJSON = JSON.stringify(content);
                 // console.log(myJSON);
                 sendToDB(myJSON);
-            } 
+            }
         }
     }
 }
+
 function userid_validation(id,mx,my) {
     var id_len = id.length;
     if (id_len == 0 || id_len >= my || id_len < mx) {
@@ -55,6 +57,7 @@ function sendToDB(content) {
         // console.log(this.status);
          if (this.readyState == 4 && this.status == 200) {
              alert("Sent");
+             // window.location = 'user.html';
          }else{
 
          }
@@ -63,3 +66,7 @@ function sendToDB(content) {
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(content);
 }
+
+document.getElementById("quickstart-sign-in").onclick = function() {
+  window.location = "user.html";
+};

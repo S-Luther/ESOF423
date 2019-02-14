@@ -11,7 +11,83 @@
         <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
         <link rel="stylesheet" href="main.css">
-		<link rel="stylesheet" href="sign-up.css" type="text/css"/>
+    		<link rel="stylesheet" href="sign-up.css" type="text/css"/>
+
+        <script type="text/javascript">
+        var url = "https://esof-423.firebaseio.com/.json";
+        var sendTo = "";
+
+
+        function formValidation() {
+            var id = document.getElementById("uid").value;
+            var uname = document.getElementById("un").value;
+            var uemail = document.getElementById("ue").value;
+            if(userid_validation(id,5,12)) {
+                if(allLetter(uname)) {
+                    if(ValidateEmail(uemail)) {
+                        var content = {userID: id,name: uname,email: uemail};
+                        var myJSON = JSON.stringify(content);
+                        // console.log(myJSON);
+                        sendToDB(myJSON);
+                    }
+                }
+            }
+        }
+
+        function userid_validation(id,mx,my) {
+            var id_len = id.length;
+            if (id_len == 0 || id_len >= my || id_len < mx) {
+                alert("User Id should not be empty / length be between "+mx+" to "+my);
+                id.focus();
+                return false;
+            }
+            return true;
+        }
+        function allLetter(uname) {
+            var letters = /^[A-Za-z]+$/;
+            if(uname.match(letters)) {
+                return true;
+            }
+            else {
+                alert('Useruname must have alphabet characters only');
+                uname.focus();
+                return false;
+            }
+        }
+        function ValidateEmail(uemail) {
+            var mailformat = /\S+@\S+\.\S+/;
+            if(uemail.match(mailformat)) {
+                return true;
+            }
+            else {
+                alert("You have entered an invalid email address!");
+                uemail.focus();
+                return false;
+            }
+        }
+
+        function sendToDB(content) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                // console.log(this.readyState);
+                // console.log(this.status);
+                 if (this.readyState == 4 && this.status == 200) {
+                     alert("Sent");
+                     window.location = 'user.html';
+                 }else{
+
+                 }
+            };
+            xhttp.open("PUT", url.slice(0, url.length-5) + sendTo + ".json", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(content);
+        }
+
+        document.getElementById("quickstart-sign-in").onclick = function() {
+          window.location = "user.html";
+        };
+      </script>
+
   </head>
 <body>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -53,8 +129,9 @@
               </div>
             </form>
           </section>
-          <!-- Button that handles sign-in/sign-out -->
+          <!-- Button that sends info -->
           <section id="submitID">
+            <!-- formValidation() -->
             <button class="mdl-button mdl-js-button mdl-button--raised" value="submit" onclick="formValidation()" id="quickstart-sign-in">Submit</button>
           </section>
             <div class="divider"/>
@@ -68,7 +145,6 @@
       </div>
     </div>
   </main>
-  <script src="signupvalidation.js"></script>
 </div>
 </body>
 </html>
