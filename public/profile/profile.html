@@ -1,9 +1,5 @@
 <!DOCTYPE HTML>
-<!--
-	Indivisible by Pixelarity
-	pixelarity.com | hello@pixelarity.com
-	License: pixelarity.com/license
--->
+
 <html>
 	<head>
 		<title>Untitled</title>
@@ -22,16 +18,16 @@
 
 				<!-- Home -->
 					<article id="home" class="panel special">
-						<div class="image">
-							<img id="ppic" src="" alt="" data-position="center center" />
+						<div id=ppic class="image">
+							<img src="images/default.jpg" alt="" data-position="center center" />
 						</div>
 						<div class="content">
 							<div class="inner">
 								<header>
 									<h1><div id="fname"></div><div id="lname"></div></h1>
-									<p><div id="email"></div><br />
-									<div id="btype"></div><br />
-									<div id="userId"></div><br /></p>
+									<p><div id="email">Email: </div><br />
+									<div id="btype">Blood Type: </div><br />
+									<div id="userId">User ID: </div><br /></p>
 								</header>
 								<nav id="nav">
 									<ul class="actions vertical special spinY">
@@ -45,10 +41,17 @@
 
       <script>
       
-        
-        
-        
-      var url = "https://esof-423.firebaseio.com/Users/123456789";
+      function getUrlVars() {
+          var vars = {};
+          var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+              vars[key] = value;
+          });
+          return vars;
+      }
+      
+      
+      
+      var url = "https://esof-423.firebaseio.com/users/"+getUrlVars()["id"]+"/";
       var fname = "fname.json";
       var lname = "lname.json";
       var btype = "btype.json";
@@ -56,29 +59,31 @@
       var userId = "userId.json";
       var ppic = "ppic.json";
       
-      
-      fname= update(url + fname);
-      lname= update(lname);
-      btype= update(btype);
-      email= update(email);
-      userId= update(userId);
-      ppic= update(ppic);
-      
-      document.getElementById("fname").innerHTML = fname;
-      document.getElementById("lname").innerHTML = lname;
-      document.getElementById("btype").innerHTML = btype;
-      document.getElementById("email").innerHTML = email;
-      document.getElementById("userId").innerHTML = userId;
-      document.getElementById("ppic").src = ppic;
+      ppic= update(url +ppic, "ppic");
+
+      fname= update(url + fname, "fname");
+      lname= update(url +lname, "lname");
+      btype= update(url +btype, "btype");
+      email= update(url +email, "email");
+      userId= update(url +userId, "userId");
       
       
-      function update(value) {
-      
+      function update(value, id) {
+          console.log(value);
+
           fetch(value)
               .then(response => response.json())
               .then(data => {
                   console.log(data);
+                  
+                  if(id == "ppic")
+                    document.getElementById(id).style = "background-image: url("+data+");";  
+                  else
+                    document.getElementById(id).innerHTML = document.getElementById(id).innerHTML + data;
+
                   return data;
+                  
+        
               })
               .catch(err => {
                 console.error('An error ocurred', err);
@@ -86,8 +91,11 @@
               })
       
       }
-        
-        
+      
+      
+      
+      
+
       </script>
 
 
