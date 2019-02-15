@@ -12,5 +12,8 @@ Finally this repo has a branch dedicated to testing all new material before bein
 
 To use just login and make an account!
 
+Sheets Link:
+https://docs.google.com/spreadsheets/d/1wHWTcc4B-OXc1tOnKXUc4XOzePI59JH3GpCIinaR_aU/edit?usp=sharing
 
+Site Link:
 https://esof-423.firebaseapp.com
