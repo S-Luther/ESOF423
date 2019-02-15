@@ -32,6 +32,7 @@
 								<nav id="nav">
 									<ul class="actions vertical special spinY">
 										<li><a href="#" class="button">Files</a></li>
+										<li><a href="#" class="button">Update</a></li>
 
 									</ul>
 								</nav>
@@ -75,11 +76,15 @@
               .then(response => response.json())
               .then(data => {
                   console.log(data);
-                  
-                  if(id == "ppic")
+                  if(data == null){
+                    document.getElementById(id).innerHTML = "";
+                  }
+                  else if(id == "ppic"){
                     document.getElementById(id).style = "background-image: url("+data+");";  
-                  else
+                  }
+                  else{
                     document.getElementById(id).innerHTML = document.getElementById(id).innerHTML + data;
+                  }
 
                   return data;
                   
