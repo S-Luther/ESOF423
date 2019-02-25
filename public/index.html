@@ -14,6 +14,7 @@
         <script src="/__/firebase/5.7.0/firebase-app.js"></script>
         <script src="/__/firebase/5.7.0/firebase-auth.js"></script>
         <script src="/__/firebase/init.js"></script>
+        <script src="writeDB.js"></script>
 
         <script type="text/javascript">
 
@@ -67,6 +68,14 @@
               }
               // The signed-in user info.
               var user = result.user;
+              if user.lastLoginAt == null{
+
+                  currentUID = user.uid;
+                  splashPage.style.display = 'none';
+                  writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+
+              }
+
 
             }).catch(function(error) {
               // Handle Errors here.
