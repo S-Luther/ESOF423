@@ -13,8 +13,10 @@
     		<link rel="stylesheet" href="" />
         <script src="/__/firebase/5.7.0/firebase-app.js"></script>
         <script src="/__/firebase/5.7.0/firebase-auth.js"></script>
+        <script src="/__/firebase/5.7.0/firebase-database.js"></script>
         <script src="/__/firebase/init.js"></script>
-        <script src="writeDB.js"></script>
+        <!-- <script src="writeDB.js"></script> -->
+        <script src="writeToFirebase.js"></script>
 
         <script type="text/javascript">
 
@@ -53,6 +55,15 @@
            *  - firebase.auth().getRedirectResult(): This promise completes when the user gets back from
            *    the auth redirect flow. It is where you can get the OAuth access token from the IDP.
            */
+           function writeUserData(userId, name, email, imageUrl) {
+             firebase.database().ref('users/' + userId).set({
+               username: name,
+               email: email,
+               profile_picture : imageUrl
+             });
+           }
+
+
           function initApp() {
             // Result from Redirect auth flow.
             // [START getidptoken]
@@ -68,13 +79,13 @@
               }
               // The signed-in user info.
               var user = result.user;
-              if user.lastLoginAt == null{
+
 
                   currentUID = user.uid;
                   splashPage.style.display = 'none';
                   writeUserData(user.uid, user.displayName, user.email, user.photoURL);
 
-              }
+
 
 
             }).catch(function(error) {
