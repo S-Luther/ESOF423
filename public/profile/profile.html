@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Untitled</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body class="is-loading-0 is-loading-1">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Home -->
+					<article id="home" class="panel special">
+						<div id=ppic class="image">
+							<img src="images/default.jpg" alt="" data-position="center center" />
+						</div>
+						<div class="content">
+							<div class="inner">
+								<header>
+									<h1><div id="fname"></div><div id="lname"></div></h1>
+									<p><div id="email">Email: </div><br />
+									<div id="btype">Blood Type: </div><br />
+									<div id="userId">User ID: </div><br /></p>
+								</header>
+								<nav id="nav">
+									<ul class="actions vertical special spinY">
+										<li><a href="#" class="button">Files</a></li>
+										<li><a href="#" class="button">Update</a></li>
+
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</article>
+
+      <script>
+      
+      function getUrlVars() {
+          var vars = {};
+          var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+              vars[key] = value;
+          });
+          return vars;
+      }
+      
+      
+      
+      var url = "https://esof-423.firebaseio.com/users/"+getUrlVars()["id"]+"/";
+      var fname = "fname.json";
+      var lname = "lname.json";
+      var btype = "btype.json";
+      var email = "email.json";
+      var userId = "userId.json";
+      var ppic = "ppic.json";
+      
+      ppic= update(url +ppic, "ppic");
+
+      fname= update(url + fname, "fname");
+      lname= update(url +lname, "lname");
+      btype= update(url +btype, "btype");
+      email= update(url +email, "email");
+      userId= update(url +userId, "userId");
+      
+      
+      function update(value, id) {
+          console.log(value);
+
+          fetch(value)
+              .then(response => response.json())
+              .then(data => {
+                  console.log(data);
+                  if(data == null){
+                    document.getElementById(id).innerHTML = "";
+                  }
+                  else if(id == "ppic"){
+                    document.getElementById(id).style = "background-image: url("+data+");";  
+                  }
+                  else{
+                    document.getElementById(id).innerHTML = document.getElementById(id).innerHTML + data;
+                  }
+
+                  return data;
+                  
+        
+              })
+              .catch(err => {
+                console.error('An error ocurred', err);
+
+              })
+      
+      }
+      
+      
+      
+      
+
+      </script>
+
+
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
