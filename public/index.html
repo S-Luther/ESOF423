@@ -11,12 +11,21 @@
 
         <link rel="stylesheet" href="index.css">
     		<link rel="stylesheet" href="" />
-        <script src="/__/firebase/5.7.0/firebase-app.js"></script>
-        <script src="/__/firebase/5.7.0/firebase-auth.js"></script>
-        <script src="/__/firebase/5.7.0/firebase-database.js"></script>
-        <script src="/__/firebase/init.js"></script>
-        <!-- <script src="writeDB.js"></script> -->
-        <script src="writeToFirebase.js"></script>
+
+        <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyDDsSMQ5fz__zVROPs58rqVnFlkcu15PF8",
+            authDomain: "esof-423.firebaseapp.com",
+            databaseURL: "https://esof-423.firebaseio.com",
+            projectId: "esof-423",
+            storageBucket: "esof-423.appspot.com",
+            messagingSenderId: "991614948455"
+          };
+          firebase.initializeApp(config);
+        </script>
+
 
         <script type="text/javascript">
 
@@ -55,12 +64,27 @@
            *  - firebase.auth().getRedirectResult(): This promise completes when the user gets back from
            *    the auth redirect flow. It is where you can get the OAuth access token from the IDP.
            */
+           // function writeUserData(userId, name, email, imageUrl) {
+           //   firebase.database().ref('users/' + userId).set({
+           //     username: name,
+           //     email: email,
+           //     profile_picture : imageUrl
+           //   });
+           // }
            function writeUserData(userId, name, email, imageUrl) {
+             var fireUser = firebase.auth().currentUser;
              firebase.database().ref('users/' + userId).set({
                username: name,
                email: email,
-               profile_picture : imageUrl
+               profile_picture : imageUrl,
+               profile_type : "Patient",
+               age : "N/A",
+               gender : "N/A",
+               // date_created : fireUser.createdAt,
+               // last_signin : fireUser.lastSignedInAt,
+               phone : "phoneNumber"
              });
+             console.log(fireUser.createdAt)
            }
 
 
@@ -79,13 +103,8 @@
               }
               // The signed-in user info.
               var user = result.user;
-
-
-                  currentUID = user.uid;
-                  splashPage.style.display = 'none';
-                  writeUserData(user.uid, user.displayName, user.email, user.photoURL);
-
-
+              // , fireUser.createdAt, fireUser.lastSignedInAt
+              writeUserData(user.uid, user.displayName, user.email, user.photoURL);
 
 
             }).catch(function(error) {
@@ -108,6 +127,8 @@
             });
             // [END getidptoken]
 
+
+
             // Listening for auth state changes.
             // [START authstatelistener]
             firebase.auth().onAuthStateChanged(function(user) {
@@ -122,6 +143,8 @@
                 var isAnonymous = user.isAnonymous;
                 var uid = user.uid;
                 var providerData = user.providerData;
+
+
 
                 // [START_EXCLUDE]
                 document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
