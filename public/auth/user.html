@@ -23,30 +23,31 @@
 
       function initApp() {
 
-        var user = firebase.auth().currentUser;
-
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
-              var name = user.displayName;
-              var email = user.email;
-              var photoUrl = user.photoURL;
-              var emailVerified = user.emailVerified;
-              var uid = user.uid;
+            var user = firebase.auth().currentUser;
+            var name, email, photoUrl, uid, emailVerified;
 
-              document.getElementById('get-userinfo').textContent = name;
-              document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
-              document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+            if (user != null) {
+              name = user.displayName;
+              email = user.email;
+              photoUrl = user.photoURL;
+              emailVerified = user.emailVerified;
+              uid = user.uid;
 
+              document.getElementById('get-userinfo').textContent = JSON.stringify(user, null, '  ');;
+            }
+
+            document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
           } else {
             // User is signed out.
             // [START_EXCLUDE]
-            document.getElementById('quickstart-account-details').textContent = 'null';
+            document.getElementById('get-userinfo').textContent = 'null';
             document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
             // [END_EXCLUDE]
           }
         });
       }
-
       window.onload = function() {
         initApp();
       };
@@ -68,10 +69,8 @@
       <!-- Container where we'll display the user details -->
       <div class="quickstart-user-details-container">
         Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
-        <div>Firebase auth <code>currentUser</code> object value:</div>
-        <pre><code id="quickstart-account-details">null</code></pre>
-        <!-- <div>Firebase auth currentUser object value:</div>
-        <pre><span id="get-userinfo">unknown</span></pre> -->
+        <div>Firebase auth currentUser object value:</div>
+        <pre><span id="get-userinfo">unknown</span></pre>
       </div>
       <section id="exit">
         <form action="../index.html">
