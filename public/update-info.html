@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Esof 423</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="update.css" type="text/css"/>
+    </head>
+    <body>
+      <h1>Update Information</h1>
+        <form name='role'>
+            <input type="radio" name="role" id='patient' value="patient"> Patient<br>
+            <input type="radio" name="role" id='doctor' value="doctor"> Doctor<br>
+        </form>
+        <button class="role-button" value="roleSubmit" onclick="updateRole()">Submit</button>
+      <form name='update'>
+          <ul>
+            <li><label for="email">Update Email:</label></li>
+            <li><input type="email" id="email"/></li>
+            </ul>
+        </form>
+        <div class="clear"></div>
+        <button value="submit" onclick="updateEmail()">Submit</button>
+    </body>
+    <script src="update-validation.js"></script>
+</html>
