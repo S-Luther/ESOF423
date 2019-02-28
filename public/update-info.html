@@ -8,6 +8,11 @@
     </head>
     <body>
       <h1>Update Information</h1>
+        <form name='role'>
+            <input type="radio" name="role" value="patient"> Patient<br>
+            <input type="radio" name="role" value="doctor"> Doctor<br>
+        </form>
+        <button value="roleSubmit" onclick="updateRole()">Submit</button>
       <form name='update'>
           <ul>
             <li><label for="email">Update Email:</label></li>
