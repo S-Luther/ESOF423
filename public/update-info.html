@@ -9,10 +9,10 @@
     <body>
       <h1>Update Information</h1>
         <form name='role'>
-            <input type="radio" name="role" value="patient"> Patient<br>
-            <input type="radio" name="role" value="doctor"> Doctor<br>
+            <input type="radio" name="role" id='patient' value="patient"> Patient<br>
+            <input type="radio" name="role" id='doctor' value="doctor"> Doctor<br>
         </form>
-        <button value="roleSubmit" onclick="updateRole()">Submit</button>
+        <button class="role-button" value="roleSubmit" onclick="updateRole()">Submit</button>
       <form name='update'>
           <ul>
             <li><label for="email">Update Email:</label></li>
