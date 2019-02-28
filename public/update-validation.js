@@ -11,11 +11,6 @@ firebase.initializeApp(config);
 
 document.querySelector('.role-button').addEventListener('click', setRole);
 
-function getRole(userRef){
-    
-    return true;
-}
-
 function setRole(){
     var userId = firebase.auth().currentUser.uid;
     var database = firebase.database();
