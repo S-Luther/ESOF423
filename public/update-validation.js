@@ -17,34 +17,19 @@ function setRole(){
     
     let userRef = database.ref('users/'+userId);
     
-<<<<<<< HEAD
-    role = 'patient';
-    
-    if (document.getElementById('doctor').checked){
-        role = 'doctor'
-    }
-    userRef.update({'role':role})
-=======
     role = 'Patient';
     
     if (document.getElementById('doctor').checked){
         role = 'Doctor'
     }
     userRef.update({'profile_type':role})
->>>>>>> dev
 }
 
 function updateEmail(){
     var userId = firebase.auth().currentUser.uid;
-<<<<<<< HEAD
-    let userRef = firebase.database().ref('users/'+userId);
-        
-    var id = document.getElementById("email").value;
-=======
     var userRef = firebase.database().ref('users/'+userId);
         
     var email = document.getElementById("email").value;
->>>>>>> dev
     
     userRef.update({'email':email});
 }
