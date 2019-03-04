@@ -77,6 +77,7 @@
               // date_created : fireUser.createdAt,
               // last_signin : fireUser.lastSignedInAt,
               phone : "phoneNumber"
+              window.location.href = "profile/profile.html?id=" + user.uid;
             });
           }
             console.log(fireUser.createdAt)
@@ -137,6 +138,8 @@
               if (user) {
 
                 // User is signed in.
+                writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+
                 var displayName = user.displayName;
                 var email = user.email;
                 var emailVerified = user.emailVerified;
@@ -151,7 +154,7 @@
                 document.getElementById('quickstart-sign-in').textContent = 'Sign out';
                 document.getElementById('quickstart-account-details').textContent = displayName;
                 // [END_EXCLUDE]
-                window.location.href = "profile/profile.html?id=" + user.uid;
+
               } else {
                 // User is signed out.
                 // [START_EXCLUDE]
