@@ -8,6 +8,8 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
@@ -24,24 +26,37 @@
 						<div class="content">
 							<div class="inner">
 								<header>
-									<h1><div id="fname"></div><div id="lname"></div></h1>
+									<h1><div id="fname"></div></h1>
 									<p><div id="email">Email: </div><br />
-									<div id="btype">Blood Type: </div><br />
-									<div id="userId">User ID: </div><br /></p>
+									<div id="btype">Type: </div><br />
+									<div id="userId">Age: </div><br />
+									<div id="lname">Gender: </div></p>
 								</header>
 								<nav id="nav">
 									<ul class="actions vertical special spinY">
 										<li><a href="files.html" class="button">Files</a></li>
-										<li><a href="#" class="button">Update</a></li>
+										<li><a href="https://esof-423.firebaseapp.com/update-info.html?" class="button">Update</a></li>
 
 									</ul>
 								</nav>
 							</div>
 						</div>
 					</article>
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyDDsSMQ5fz__zVROPs58rqVnFlkcu15PF8",
+            authDomain: "esof-423.firebaseapp.com",
+            databaseURL: "https://esof-423.firebaseio.com",
+            projectId: "esof-423",
+            storageBucket: "esof-423.appspot.com",
+            messagingSenderId: "991614948455"
+          };
+          firebase.initializeApp(config);
+        </script>
 
       <script>
-      
+      var id="";
       function getUrlVars() {
           var vars = {};
           var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -50,15 +65,26 @@
           return vars;
       }
       
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          id = user.uid;
+        }
+        else{
+          id=getUrlVars()["id"];
+        }
+      });
+
+      
+
       
       
       var url = "https://esof-423.firebaseio.com/users/"+getUrlVars()["id"]+"/";
-      var fname = "fname.json";
-      var lname = "lname.json";
-      var btype = "btype.json";
+      var fname = "username.json";
+      var lname = "gender.json";
+      var btype = "profile_type.json";
       var email = "email.json";
-      var userId = "userId.json";
-      var ppic = "ppic.json";
+      var userId = "age.json";
+      var ppic = "profile_picture.json";
       
       ppic= update(url +ppic, "ppic");
 

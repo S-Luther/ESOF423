@@ -31,5 +31,7 @@ function handleFileUploadSubmit(e) {
   }, () => {
      // Do something once upload is complete
      console.log('success');
+     window.alert("success");
+
   });
 }
