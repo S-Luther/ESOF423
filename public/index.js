@@ -27,9 +27,5 @@ function sendToDB() {
     xhttp.send(content);
 }
 
-<<<<<<< HEAD
-//update();
-=======
 update();
->>>>>>> dev
 //sendToDB();
