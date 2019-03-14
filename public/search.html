@@ -7,8 +7,8 @@
 		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <link rel="stylesheet" href="css/global.css" type="text/css"/>
-		<link rel="stylesheet" href="css/update.css" type="text/css"/>
+		<link rel="stylesheet" href="css/global.css" type="text/css"/>
+        <link rel="stylesheet" href="css/search.css" type="text/css"/>
     </head>
     <header>
         <div class="container">
@@ -22,20 +22,13 @@
         </div>
     </header>
     <body>
-      <h1>Update Information</h1>
-        <form name='role'>
-            <input type="radio" name="role" id='patient' value="patient"> Patient<br>
-            <input type="radio" name="role" id='doctor' value="doctor"> Doctor<br>
-        </form>
-        <button class="role-button" value="roleSubmit" onclick="setRole()">Submit</button>
-      <form name='update'>
-          <ul>
-            <li><label for="email">Update Email:</label></li>
-            <li><input type="email" id="email"/></li>
-            </ul>
-        </form>
-        <div class="clear"></div>
-        <button value="submit" onclick="updateEmail()">Submit</button>
+        <div class="container">
+            <div id="searchbar">
+                <input type="text" id="search-input">
+                <button class="searchbutton" value="search" onclick="search()">Search</button>
+            </div>
+            <div id="content"></div>
+        </div>
     </body>
-    <script src="update-validation.js"></script>
+    <script src="search.js"></script>
 </html>
