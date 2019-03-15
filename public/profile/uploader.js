@@ -10,6 +10,7 @@ var config = {
 firebase.initializeApp(config);
 
 
+
 const storageService = firebase.storage();
 const storageRef = storageService.ref();
 
@@ -21,6 +22,20 @@ function handleFileUploadChange(e) {
   selectedFile = e.target.files[0];
 }
 
+
+function displayFile(dl){
+  document.getElementById("files").innerHTML = document.getElementById("files").innerHTML + "<img src=\"" + dl + "\" style=\"width:25%; height:auto;\">"
+
+}
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
 function handleFileUploadSubmit(e) {
   const uploadTask = storageRef.child(`images/${selectedFile.name}`).put(selectedFile); //create a child directory called images, and place the file inside this directory
   uploadTask.on('state_changed', (snapshot) => {
@@ -30,6 +45,10 @@ function handleFileUploadSubmit(e) {
     console.log(error);
   }, () => {
      // Do something once upload is complete
+    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+      displayFile(downloadURL)
+      console.log('File available at', downloadURL);
+    });
      console.log('success');
      window.alert("success");
 

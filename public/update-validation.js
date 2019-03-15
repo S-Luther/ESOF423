@@ -28,8 +28,16 @@ function setRole(){
 function updateEmail(){
     var userId = firebase.auth().currentUser.uid;
     var userRef = firebase.database().ref('users/'+userId);
-        
+    
+    var emailRegex = ^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$;
+    
     var email = document.getElementById("email").value;
     
-    userRef.update({'email':email});
+    if(email.value.match(emailRegex)) {
+        userRef.update({'email':email});
+    }
+    else {
+        alert('Email Format Error');
+    }
+    
 }
