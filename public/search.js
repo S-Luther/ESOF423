@@ -41,7 +41,8 @@ function search(){
         output = "";
         
         output += "<div class='users'>";
-        output += "<p class='username'>" + data.val().username + "</p>"
+        output += "<p class='user-info'>" + data.val().username + "</p>"
+        output += "<p>" + data.val().email + "</p>"
         output += "</div>";
         
         display.innerHTML = display.innerHTML + output;
