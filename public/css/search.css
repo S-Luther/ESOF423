@@ -1,0 +1,30 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+#searchbar input{
+    margin-top: 20px;
+    padding 5px;
+}
+
+.searchbutton {
+    margin-left: 5px;
+}
+
+#content {
+    margin-top: 20px;
+}
+
+.users {
+    width: 33.33333333%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid black;
+    background-color: azure;
+    box-sizing: border-box;
+}
+
+.user-info {
+    
+}
