@@ -9,9 +9,25 @@
         <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
 
-        <link rel="stylesheet" href="../extra/main.css">
+        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="friends.css" />
     		<link rel="stylesheet" href="sign-up.css" type="text/css"/>
+
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyDDsSMQ5fz__zVROPs58rqVnFlkcu15PF8",
+            authDomain: "esof-423.firebaseapp.com",
+            databaseURL: "https://esof-423.firebaseio.com",
+            projectId: "esof-423",
+            storageBucket: "esof-423.appspot.com",
+            messagingSenderId: "991614948455"
+          };
+          firebase.initializeApp(config);
+        </script>
+
 
   </head>
 <body>
@@ -32,44 +48,84 @@
       <!-- Container for the demo -->
       <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
         <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-          <h2 class="mdl-card__title-text">Create New User Account</h2>
+          <h2 class="mdl-card__title-text">Link Account to Doctors and Patients</h2>
         </div>
-        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          <p>Enter information below</p>
-          <section id="userinfo">
-            <form action="#">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="uid">
-                <label class="mdl-textfield__label mdl-color-text--grey-600" for="userID">Username...</label>
-              </div>
-              <p></p>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="un">
-                <label class="mdl-textfield__label mdl-color-text--grey-600" for="name">Name...</label>
-              </div>
-              <p></p>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="ue">
-                <label class="mdl-textfield__label mdl-color-text--grey-600" for="email">Email...</label>
-              </div>
-            </form>
-          </section>
-          <!-- Button that sends info -->
-          <section id="submitID">
-            <!-- formValidation() -->
-            <button class="mdl-button mdl-js-button mdl-button--raised" value="submit" onclick="formValidation()" id="quickstart-sign-in">Submit</button>
-          </section>
-            <div class="divider"/>
-          <section id="exit">
-            <form action="../index.html">
-              <button class="mdl-button mdl-js-button mdl-button--raised" id="exit">Exit</button>
-            </form>
-          </section>
-          <div class="clear"></div>
+        <div class="">
+
+          <form action="#">
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" id="myInput" onkeyup="searchFunction()" placeholder="Search for names..">
+              <label class="mdl-textfield__label" for="myInput">Text...</label>
+            </div>
+          </form>
+          <!-- <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."> -->
+
+            <table id="myTable">
+              <tr class="header">
+                <th style="width:60%;">Name</th>
+                <th style="width:40%;">Type</th>
+              </tr>
+              <tr>
+                <td>Alfreds Futterkiste</td>
+                <td>Doctor</td>
+              </tr>
+              <tr>
+                <td>Berglunds Snabbkop</td>
+                <td>Patient</td>
+              </tr>
+              <tr>
+                <td>Hendrick Klotz</td>
+                <td>Doctor</td>
+              </tr>
+              <tr>
+                <td>Koniglich Essen</td>
+                <td>Doctor</td>
+              </tr>
+            </table>
         </div>
       </div>
     </div>
   </main>
 </div>
 </body>
+
+<script>
+
+function searchDB(){
+
+  var db = firebase.database();
+  var ref = db.ref("users");
+  var usernames = ref.equalTo("andrew dixon")
+  console.log(usernames.username);
+  ref.orderByChild("username").on("child_added", function(snapshot) {
+  console.log(snapshot.key + ": " + snapshot.val().username);
+});
+}
+
+
+function searchFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  searchDB();
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+
 </html>
