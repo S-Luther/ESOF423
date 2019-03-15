@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Esof 423</title>
+        <meta charset="utf-8">
+        <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="css/global.css" type="text/css"/>
+		<link rel="stylesheet" href="css/update.css" type="text/css"/>
+    </head>
+    <header>
+        <div class="container">
+            <img src="images/logo.png" id="logo">
+            <ul id="nav">
+                <li><a href="index.html" id="first-link">Home</a></li>
+                <li><a href="">Profile</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </header>
+    <body>
+      <h1>Update Information</h1>
+        <form name='role'>
+            <input type="radio" name="role" id='patient' value="patient"> Patient<br>
+            <input type="radio" name="role" id='doctor' value="doctor"> Doctor<br>
+        </form>
+        <button class="role-button" value="roleSubmit" onclick="setRole()">Submit</button>
+      <form name='update'>
+          <ul>
+            <li><label for="email">Update Email:</label></li>
+            <li><input type="email" id="email"/></li>
+            </ul>
+        </form>
+        <div class="clear"></div>
+        <button value="submit" onclick="updateEmail()">Submit</button>
+    </body>
+    <script src="update-validation.js"></script>
+</html>
