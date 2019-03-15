@@ -69,6 +69,7 @@
             if(!firebase.database().ref('users/' + userId)){
             firebase.database().ref('users/' + userId).set({
               username: name,
+                id: userId,
               email: email,
               profile_picture : imageUrl,
               profile_type : "Patient",

@@ -8,24 +8,28 @@ var config = {
 };
 firebase.initializeApp(config);
 
+var user_arr = [];
+var counter = 0;
+
 displayAll();
 
 function displayAll(){
     var display = document.getElementById("content");
     var ref = firebase.database().ref().child('users');
     
-    //Clear content
-    display.innerHTML = " ";
-    
-    // List users underneath search bar
+    // Loop through to fill arr with names and print them to screen
     ref.orderByChild("username").on("child_added", function(data) {
+        user_arr[counter] = data.val().username;
+        
         output = "";
         
         output += "<div class='users'>";
-        output += "<p class='username'>" + data.val().username + "</p>"
+        output += "<p class='username'>" + user_arr[counter] + "</p>"
         output += "</div>";
         
         display.innerHTML = display.innerHTML + output;
+        
+        counter += 1;
     })
 }
 
@@ -37,14 +41,21 @@ function search(){
     display.innerHTML = " ";
     
     var input = document.getElementById("search-input").value;
-    ref.orderByChild("username").equalTo(input).on("child_added", function(data) {
-        output = "";
-        
-        output += "<div class='users'>";
-        output += "<p class='user-info'>" + data.val().username + "</p>"
-        output += "<p>" + data.val().email + "</p>"
-        output += "</div>";
-        
-        display.innerHTML = display.innerHTML + output;
-    });
+    
+    //Loop through and if the string they inputed matched any user name, display it
+    var i;
+    for (i = 0; i < user_arr.length; i++) {
+        if (user_arr[i].toLowerCase().includes(input.toLowerCase())) {
+            ref.orderByChild("username").equalTo(user_arr[i]).on("child_added", function(data) {
+                output = "";
+
+                output += "<div class='users'>";
+                output += '<a class="user-info" href="profile/profile.html?id=' + data.val().id +'">'+data.val().username+'</a>'
+                output += "<p class='user-info'>" + data.val().email + "</p>"
+                output += "</div>";
+
+                display.innerHTML = display.innerHTML + output;
+            });
+        }
+    }
 }
