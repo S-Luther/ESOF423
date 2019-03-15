@@ -29,7 +29,11 @@
 
 
         <script type="text/javascript">
+        var UserD = "";
+        function change(){
+          window.location.href = "profile/profile.html?id=" + UserD;
 
+        }
           /**
            * Function called when clicking the Login/Logout button.
            */
@@ -79,9 +83,22 @@
               phone : "phoneNumber"
             });
 
+          }else{ 
+            firebase.database().ref('users/' + userId).set({
+              username: name,
+              email: email,
+              profile_picture : imageUrl,
+              profile_type : "Patient",
+              age : "N/A",
+              gender : "N/A",
+              // date_created : fireUser.createdAt,
+              // last_signin : fireUser.lastSignedInAt,
+              phone : "phoneNumber"
+            });
           }
+          document.getElementById("theboi").disabled = false;
+
             console.log(fireUser.createdAt)
-            window.location.href = "profile/profile.html?id=" + user.uid;
 
           }
 
@@ -138,7 +155,7 @@
             // [START authstatelistener]
             firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
-
+                UserD = user.uid;
                 // User is signed in.
                 writeUserData(user.uid, user.displayName, user.email, user.photoURL);
 
@@ -199,6 +216,8 @@
             <p>Sign in with your Google account below.</p>
             <!-- Button that handles sign-in/sign-out -->
             <button disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="quickstart-sign-in"><i class="material-icons">account_circle</i> Sign in with Google</button>
+            <button disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="theboi" onclick="change()" style="margin-top: 20%;">Go To Profile</button>
+
           </section>
         </section>
       </div>
