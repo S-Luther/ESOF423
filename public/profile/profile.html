@@ -90,19 +90,24 @@
           var userId = "age.json";
           var ppic = "profile_picture.json";
       
-          var currentUser = firebase.auth().currentUser.uid;
+          //Current user that is logged in
+          //Change to string for developing
+          //var currentUser = firebase.auth().currentUser.uid;
+          var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
           
           if(currentUser==getUrlVars()["id"]){
-              ppic= update(url +ppic, "ppic");
-              fname= update(url + fname, "fname");
-              lname= update(url +lname, "lname");
-              btype= update(url +btype, "btype");
-              email= update(url +email, "email");
-              userId= update(url +userId, "userId");
+              //Viewing your Profile
+              ppic= updateInfo(url +ppic, "ppic");
+              fname= updateInfo(url + fname, "fname");
+              lname= updateInfo(url +lname, "lname");
+              btype= updateInfo(url +btype, "btype");
+              email= updateInfo(url +email, "email");
+              userId= updateInfo(url +userId, "userId");
           }
           else {
-              ppic= update(url +ppic, "ppic");
-              fname= update(url + fname, "fname");
+              //Viewing someone elses
+              ppic= updateInfo(url +ppic, "ppic");
+              fname= updateInfo(url + fname, "fname");
               
               //Hide Info we don't want people seeing
               document.getElementById("btype").style.display = "none";
@@ -111,10 +116,24 @@
               document.getElementById("lname").style.display = "none";
               document.getElementById("nav").style.display = "none";
               
-              document.getElementById("addFriend").innerHTML = "<a href='' onclick='' class='button'>Add Friend</a>";
+              //Add friend button goes here
+              document.getElementById("addFriend").innerHTML = "<a href='' onclick='friendRequest()' class='button'>Add Friend</a>";
           }
           
-          function update(value, id) {
+          function friendRequest() {
+              var friendId = getUrlVars()["id"];
+              //var currentUser = firebase.auth().currentUser.uid;
+              var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
+              var userRef = firebase.database().ref('users/'+friendId+"/friend_req");
+              
+              
+              //TODO: Send to DB
+              
+              
+              alert("Friend Request Sent");
+          }
+          
+          function updateInfo(value, id) {
               console.log(value);
               
               fetch(value)
