@@ -39,9 +39,9 @@
 
 										<li><a href="https://esof-423.firebaseapp.com/update-info.html?" class="button">Update</a></li>
 										<li><a href="../index.html" onclick="toggleSignIn()" class="button">Sign Out</a></li>
-
 									</ul>
 								</nav>
+                            <div id="addFriend"></div>
 							</div>
 						</div>
 					</article>
@@ -59,83 +59,85 @@
         </script>
 
       <script>
-      var id="";
-      function getUrlVars() {
-          var vars = {};
-          var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+          var id="";
+          
+          function getUrlVars() {
+              var vars = {};
+              var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
               vars[key] = value;
+              });
+              return vars;
+          }
+          
+          firebase.auth().onAuthStateChanged(function(user) {
+              if (user) {
+                  id = user.uid;
+              }
+              else {
+                  id=getUrlVars()["id"];
+              }
           });
-          return vars;
-      }
+          
+          function gotofiles() {
+              window.location = 'files.html?id='+getUrlVars()["id"];
+          }
+          
+          var url = "https://esof-423.firebaseio.com/users/"+getUrlVars()["id"]+"/";
+          var fname = "username.json";
+          var lname = "gender.json";
+          var btype = "profile_type.json";
+          var email = "email.json";
+          var userId = "age.json";
+          var ppic = "profile_picture.json";
       
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          id = user.uid;
-        }
-        else{
-          id=getUrlVars()["id"];
-        }
-      });
-
-      function gotofiles(){
-        window.location = 'files.html?id='+getUrlVars()["id"];
-      }
-
-      
-      
-      var url = "https://esof-423.firebaseio.com/users/"+getUrlVars()["id"]+"/";
-      var fname = "username.json";
-      var lname = "gender.json";
-      var btype = "profile_type.json";
-      var email = "email.json";
-      var userId = "age.json";
-      var ppic = "profile_picture.json";
-      
-      ppic= update(url +ppic, "ppic");
-
-      fname= update(url + fname, "fname");
-      lname= update(url +lname, "lname");
-      btype= update(url +btype, "btype");
-      email= update(url +email, "email");
-      userId= update(url +userId, "userId");
-      
-      
-      function update(value, id) {
-          console.log(value);
-
-          fetch(value)
-              .then(response => response.json())
-              .then(data => {
+          var currentUser = firebase.auth().currentUser.uid;
+          
+          if(currentUser==getUrlVars()["id"]){
+              ppic= update(url +ppic, "ppic");
+              fname= update(url + fname, "fname");
+              lname= update(url +lname, "lname");
+              btype= update(url +btype, "btype");
+              email= update(url +email, "email");
+              userId= update(url +userId, "userId");
+          }
+          else {
+              ppic= update(url +ppic, "ppic");
+              fname= update(url + fname, "fname");
+              
+              //Hide Info we don't want people seeing
+              document.getElementById("btype").style.display = "none";
+              document.getElementById("email").style.display = "none";
+              document.getElementById("userId").style.display = "none";
+              document.getElementById("lname").style.display = "none";
+              document.getElementById("nav").style.display = "none";
+              
+              document.getElementById("addFriend").innerHTML = "<a href='' onclick='' class='button'>Add Friend</a>";
+          }
+          
+          function update(value, id) {
+              console.log(value);
+              
+              fetch(value)
+                  .then(response => response.json())
+                  .then(data => {
                   console.log(data);
-                  if(data == null){
+                  if(data == null) {
                     document.getElementById(id).innerHTML = "";
                   }
-                  else if(id == "ppic"){
+                  else if(id == "ppic") {
                     document.getElementById(id).style = "background-image: url("+data+");";  
                   }
-                  else{
+                  else {
                     document.getElementById(id).innerHTML = document.getElementById(id).innerHTML + data;
                   }
 
                   return data;
-                  
-        
               })
               .catch(err => {
                 console.error('An error ocurred', err);
-
               })
-      
-      }
-      
-      
-      
-      
-
+          }
       </script>
-
-
-
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
