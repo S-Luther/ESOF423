@@ -124,7 +124,9 @@
               var friendId = getUrlVars()["id"];
               //var currentUser = firebase.auth().currentUser.uid;
               var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
-              var userRef = firebase.database().ref('users/'+friendId+"/friend_req");
+              var userRef = firebase.database().ref('users/'+friendId+"/friend_req").push({
+                request: currentUser
+              });
               
               
               //TODO: Send to DB
@@ -139,19 +141,19 @@
               fetch(value)
                   .then(response => response.json())
                   .then(data => {
-                  console.log(data);
-                  if(data == null) {
-                    document.getElementById(id).innerHTML = "";
-                  }
-                  else if(id == "ppic") {
-                    document.getElementById(id).style = "background-image: url("+data+");";  
-                  }
-                  else {
-                    document.getElementById(id).innerHTML = document.getElementById(id).innerHTML + data;
-                  }
+                      console.log(data);
+                      if(data == null) {
+                        document.getElementById(id).innerHTML = "";
+                      }
+                      else if(id == "ppic") {
+                        document.getElementById(id).style = "background-image: url("+data+");";  
+                      }
+                      else {
+                        document.getElementById(id).innerHTML = document.getElementById(id).innerHTML + data;
+                      }
 
-                  return data;
-              })
+                      return data;
+                  })
               .catch(err => {
                 console.error('An error ocurred', err);
               })
