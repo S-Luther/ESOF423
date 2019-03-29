@@ -6,6 +6,7 @@ This repository is a firebase based web-app built using primarily JavaScript.
 
 
 User Documentation:
+
 To create a new account - Either login with you existing Google account or create a new Google account. Once logged in, the Medical App will create a local profile. 
 
 To update information - Go to My Profile and click update.
