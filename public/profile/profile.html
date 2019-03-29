@@ -6,17 +6,17 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/main.css"/>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
         <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        <link rel="sytlesheet" href="assets/css/requests.css" type="text/css"/>
 
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
 	<body class="is-loading-0 is-loading-1">
-
 		<!-- Wrapper -->
 			<div id="wrapper">
 
@@ -44,6 +44,8 @@
 									</ul>
 								</nav>
                             <div id="addFriend"></div>
+                            <h4>Recent Friend Request</h4>
+                            <div id="recentReq"></div>
 							</div>
 						</div>
 					</article>
@@ -58,6 +60,44 @@
             messagingSenderId: "991614948455"
           };
           firebase.initializeApp(config);
+            
+            var counter = 0;
+
+            displayRequests();
+
+            function displayRequests(){
+                var display = document.getElementById("recentReq");
+                //var currentUser = firebase.auth().currentUser.uid;
+                var userId = "PUJRmoguPDZ18AhGZy05vpM5gJM2";
+                var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
+
+                // Get the most recent request
+                ref.on("value", function(data) {
+                    var requests = data.val();
+                    console.log("Req"+counter+" : "+requests.req0);
+
+                    var reqRef = firebase.database().ref().child('users/'+requests.req0);
+
+                    reqRef.on('value', function(snapshot) {
+                        var output = "";
+                        var user_name = "";
+                        var role = "";
+                        
+                        user_name += snapshot.val().username;
+                        role += snapshot.val().profile_type;
+                        
+                        output += "<div class='req'>";
+                        output += "<p>"+user_name+"</p>";
+                        output += "<p>"+role+"</p>";
+                        output += "<a href=''>Add as friend</a>";
+                        output += "</div>";
+
+                        display.innerHTML = display.innerHTML + output;
+                    });
+
+                    counter += 1;
+                })
+            }
             
           var id="";
 
@@ -92,8 +132,8 @@
 
           //Current user that is logged in
           //Change to string for developing
-          var currentUser = firebase.auth().currentUser.uid;
-          //var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
+          //var currentUser = firebase.auth().currentUser.uid;
+          var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
 
           if(currentUser==getUrlVars()["id"]){
               //Viewing your Profile
@@ -124,13 +164,12 @@
               var friendId = getUrlVars()["id"];
               //var currentUser = firebase.auth().currentUser.uid;
               var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
-              var userRef = firebase.database().ref('users/'+friendId+"/friend_req").push({
-                request: currentUser
-              });
-
+              var userRef = firebase.database().ref().child('users/'+friendId+"/friend_req");
 
               //TODO: Send to DB
-
+              userRef.set ({
+                  request: currentUser
+              });
 
               alert("Friend Request Sent");
           }
