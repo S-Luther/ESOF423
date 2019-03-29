@@ -129,38 +129,37 @@
             function displayRequests(){
                 var display = document.getElementById("recentReq");
                 
-                var userId = getUrlVars()["id"];
-                var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
-            
-                ref.orderByChild("req").on("child_added", function(data) {
-                    var reqRef = firebase.database().ref().child('users/'+data.val().req);
-                    
-                    
-                    reqRef.on('value', function(snapshot) {
-                        var output = "";
-                        var user_name = "";
-                        var role = "";
-                        
-                        if(snapshot.val()!=null) {
-                            user_name += snapshot.val().username;
-                            role += snapshot.val().profile_type;
+                if(display!=null) {
+                    var userId = getUrlVars()["id"];
+                    var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
 
-                            output += "<div class='req'>";
-                            output += "<p>"+user_name+"</p>";
-                            output += "<p>"+role+"</p>";
-                            output += "<a href='' onclick='addFriend()' class='button'>Accept Friend Request</a>";
-                            output += "</div>";
-                        }
-                        else {
-                            output += "<div class='req'>";
-                            output += "<p>No Requests</p>";
-                            output += "</div>";
-                        }
-                        
-                        display.innerHTML = display.innerHTML + output;
+                    ref.orderByChild("req").on("child_added", function(data) {
+                        var reqRef = firebase.database().ref().child('users/'+data.val().req);
+
+
+                        reqRef.on('value', function(snapshot) {
+                            var output = "";
+                            var user_name = "";
+                            var role = "";
+
+                            if(snapshot.val()!=null) {
+                                user_name += snapshot.val().username;
+                                role += snapshot.val().profile_type;
+
+                                output += "<div class='req'>";
+                                output += "<p>"+user_name+"</p>";
+                                output += "<p>"+role+"</p>";
+                                output += "<a href='' onclick='addFriend()' class='button'>Accept Friend Request</a>";
+                                output += "</div>";
+                            }
+                            else {
+                            }
+
+                            display.innerHTML = display.innerHTML + output;
+                        });
+
                     });
-                    
-                });
+                }
             }
 
           function friendRequest() {
@@ -172,7 +171,7 @@
               var userRef = firebase.database().ref('users/'+friendId+"/friend_req");
               var newReq = userRef.push();
 
-              newReq.set ({
+              newReq.set({
                   req: currentUser
               });
 
