@@ -32,3 +32,11 @@
 .mdl-card__title-text_checkbox{
   font-size: 16px;
 }
+
+.textfield__seporator{
+  margin-top: 20px;
+}
+
+.mdl-textfield{
+  width: 400px;
+}

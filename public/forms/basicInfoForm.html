@@ -50,15 +50,15 @@
             </div>
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
               <p>Enter information below</p>
-              <section id="userinfo">
+              <section id="userInfo">
                 <form action="#">
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-name">
                     <input class="mdl-textfield__input" type="text" id="firstName">
-                    <label class="mdl-textfield__label mdl-color-text--grey-600" for="userID">First Name...</label>
+                    <label class="mdl-textfield__label mdl-color-text--grey-600" for="firstName">First Name...</label>
                   </div>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-name">
                     <input class="mdl-textfield__input" type="text" id="lastName">
-                    <label class="mdl-textfield__label mdl-color-text--grey-600" for="userID">Last Name...</label>
+                    <label class="mdl-textfield__label mdl-color-text--grey-600" for="lastName">Last Name...</label>
                   </div>
                   <p></p>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -68,12 +68,12 @@
                   <p></p>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <input class="mdl-textfield__input" type="text" id="height">
-                    <label class="mdl-textfield__label mdl-color-text--grey-600" for="email">Height (ex: 5'10")...</label>
+                    <label class="mdl-textfield__label mdl-color-text--grey-600" for="height">Height (ex: 5'10")...</label>
                   </div>
                   <p></p>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <input class="mdl-textfield__input" type="text" id="weight">
-                    <label class="mdl-textfield__label mdl-color-text--grey-600" for="email">Weight (ex: 160lbs)...</label>
+                    <label class="mdl-textfield__label mdl-color-text--grey-600" for="weight">Weight (ex: 160lbs)...</label>
                   </div>
                   <p></p>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -85,14 +85,15 @@
                     <textarea class="mdl-textfield__input" type="text" rows= "3" id="reason" ></textarea>
                     <label class="mdl-textfield__label" for="reason">Reason for seeing doctor...</label>
                   </div>
+
+                  <!-- section dev -->
                   <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
                     <h3 class="mdl-card__title-text">Medical Information</h3>
                   </div>
-
                   <p></p>
                   <div class="mdl-textfield mdl-js-textfield">
-                    <textarea class="mdl-textfield__input" type="text" rows= "3" id="reason" ></textarea>
-                    <label class="mdl-textfield__label" for="reason">Please list and drug allergies</label>
+                    <textarea class="mdl-textfield__input" type="text" rows= "3" id="allergies" ></textarea>
+                    <label class="mdl-textfield__label" for="allergies">Please list and drug allergies</label>
                   </div>
                   <p></p>
                   <ul class="demo-list-item mdl-list">
@@ -279,7 +280,23 @@
                       </label>
                     </li>
                   </ul>
-              </form>
+
+                  <p></p>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield__seporator">
+                    <input class="mdl-textfield__input" type="text" id="illness">
+                    <label class="mdl-textfield__label mdl-color-text--grey-600" for="illness">Other Illnesses...</label>
+                  </div>
+                  <p></p>
+                  <div class="mdl-textfield mdl-js-textfield">
+                    <textarea class="mdl-textfield__input" type="text" rows= "3" id="operations" ></textarea>
+                    <label class="mdl-textfield__label" for="operations">Please list any Operations and Dates of Each</label>
+                  </div>
+                  <p></p>
+                  <div class="mdl-textfield mdl-js-textfield">
+                    <textarea class="mdl-textfield__input" type="text" rows= "3" id="medications" ></textarea>
+                    <label class="mdl-textfield__label" for="medications">Please list your current medications</label>
+                  </div>
+                </form>
 
 
               </section>
@@ -287,7 +304,7 @@
                 <!-- Button that sends info -->
                 <section id="submitID">
                   <!-- formValidation() -->
-                  <button class="mdl-button mdl-js-button mdl-button--raised" value="submit" onclick="formValidation()" id="quickstart-sign-in">Submit</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised" value="submit" onclick="submitForm()" id="submitForm">Submit</button>
                 </section>
                   <div class="divider"/>
                 <section id="exit">
@@ -303,4 +320,5 @@
       </main>
     </div>
   </body>
+  <script src="update-forms.js"></script>
 </html>
