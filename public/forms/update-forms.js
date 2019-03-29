@@ -18,6 +18,6 @@ function submitForm(){
     let userRef = database.ref('documents/'+userId);
 
     document.getElementById('userInfo')
-    
+
     userRef.update({'formSubmitted': "yes"})
 }
