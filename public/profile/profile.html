@@ -44,7 +44,8 @@
 									</ul>
 								</nav>
                             <div id="addFriend"></div>
-                            <div id="requests"></div>
+                            <h4>Recent Friend Request</h4>
+                            <div id="recentReq"></div>
 							</div>
 						</div>
 					</article>
@@ -59,6 +60,44 @@
             messagingSenderId: "991614948455"
           };
           firebase.initializeApp(config);
+            
+            var counter = 0;
+
+            displayRequests();
+
+            function displayRequests(){
+                var display = document.getElementById("recentReq");
+                //var currentUser = firebase.auth().currentUser.uid;
+                var userId = "PUJRmoguPDZ18AhGZy05vpM5gJM2";
+                var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
+
+                // Get the most recent request
+                ref.on("value", function(data) {
+                    var requests = data.val();
+                    console.log("Req"+counter+" : "+requests.req0);
+
+                    var reqRef = firebase.database().ref().child('users/'+requests.req0);
+
+                    reqRef.on('value', function(snapshot) {
+                        var output = "";
+                        var user_name = "";
+                        var role = "";
+                        
+                        user_name += snapshot.val().username;
+                        role += snapshot.val().profile_type;
+                        
+                        output += "<div class='req'>";
+                        output += "<p>"+user_name+"</p>";
+                        output += "<p>"+role+"</p>";
+                        output += "<a href=''>Add as friend</a>";
+                        output += "</div>";
+
+                        display.innerHTML = display.innerHTML + output;
+                    });
+
+                    counter += 1;
+                })
+            }
             
           var id="";
 
@@ -94,7 +133,7 @@
           //Current user that is logged in
           //Change to string for developing
           //var currentUser = firebase.auth().currentUser.uid;
-          var currentUser = "nWN8S4Ba92amu6akTgI6vMmexFd2";
+          var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
 
           if(currentUser==getUrlVars()["id"]){
               //Viewing your Profile
@@ -104,8 +143,6 @@
               btype= updateInfo(url +btype, "btype");
               email= updateInfo(url +email, "email");
               userId= updateInfo(url +userId, "userId");
-              
-              document.getElementById("requests").innerHTML = "<h4>Recent Friend Requests</h4><div id='recentReq'></div>"
           }
           else {
               //Viewing someone elses
@@ -122,70 +159,19 @@
               //Add friend button goes here
               document.getElementById("addFriend").innerHTML = "<a href='' onclick='friendRequest()' class='button'>Add Friend</a>";
           }
-            var counter = 0;
-
-            displayRequests();
-
-            function displayRequests(){
-                var display = document.getElementById("recentReq");
-                
-                if(display!=null) {
-                    var userId = getUrlVars()["id"];
-                    var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
-
-                    ref.orderByChild("req").on("child_added", function(data) {
-                        var reqRef = firebase.database().ref().child('users/'+data.val().req);
-
-
-                        reqRef.on('value', function(snapshot) {
-                            var output = "";
-                            var user_name = "";
-                            var role = "";
-
-                            if(snapshot.val()!=null) {
-                                user_name += snapshot.val().username;
-                                role += snapshot.val().profile_type;
-
-                                output += "<div class='req'>";
-                                output += "<p>"+user_name+"</p>";
-                                output += "<p>"+role+"</p>";
-                                output += "<a href='' onclick='addFriend()' class='button'>Accept Friend Request</a>";
-                                output += "</div>";
-                            }
-                            else {
-                            }
-
-                            display.innerHTML = display.innerHTML + output;
-                        });
-
-                    });
-                }
-            }
 
           function friendRequest() {
               var friendId = getUrlVars()["id"];
-              
               //var currentUser = firebase.auth().currentUser.uid;
-              var currentUser = "nWN8S4Ba92amu6akTgI6vMmexFd2";
-              
-              var userRef = firebase.database().ref('users/'+friendId+"/friend_req");
-              var newReq = userRef.push();
+              var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
+              var userRef = firebase.database().ref().child('users/'+friendId+"/friend_req");
 
-              newReq.set({
-                  req: currentUser
+              //TODO: Send to DB
+              userRef.set ({
+                  request: currentUser
               });
 
               alert("Friend Request Sent");
-          }
-            
-            function addFriend() {
-              var userId = getUrlVars()["id"];
-              var userRef = firebase.database().ref('users/'+userId+"/friend_list");
-              var newFriend = userRef.push();
-
-              newFriend.set ({
-                  req: currentUser
-              });
           }
 
           function updateInfo(value, id) {
