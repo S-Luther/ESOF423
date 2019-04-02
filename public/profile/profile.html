@@ -11,6 +11,7 @@
 		<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
         <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        <script src="assets/js/jquery.min.js"></script>
         <link rel="sytlesheet" href="assets/css/requests.css" type="text/css"/>
 
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
@@ -44,7 +45,6 @@
 									</ul>
 								</nav>
                             <div id="addFriend"></div>
-                            <h4>Recent Friend Request</h4>
                             <div id="recentReq"></div>
 							</div>
 						</div>
@@ -63,40 +63,46 @@
             
             var counter = 0;
 
-            displayRequests();
-
             function displayRequests(){
                 var display = document.getElementById("recentReq");
+                
+                display.innerHTML = display.innerHTML + "<h4>Friend Requests</h4>";
+                
                 //var currentUser = firebase.auth().currentUser.uid;
                 var userId = "PUJRmoguPDZ18AhGZy05vpM5gJM2";
+                
                 var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
 
                 // Get the most recent request
                 ref.on("value", function(data) {
                     var requests = data.val();
-                    console.log("Req"+counter+" : "+requests.req0);
 
-                    var reqRef = firebase.database().ref().child('users/'+requests.req0);
+                    ref.orderByChild("req").on("child_added", function(data) {
+                        var reqRef = firebase.database().ref().child('users/'+data.val().req);
 
-                    reqRef.on('value', function(snapshot) {
-                        var output = "";
-                        var user_name = "";
-                        var role = "";
-                        
-                        user_name += snapshot.val().username;
-                        role += snapshot.val().profile_type;
-                        
-                        output += "<div class='req'>";
-                        output += "<p>"+user_name+"</p>";
-                        output += "<p>"+role+"</p>";
-                        output += "<a href=''>Add as friend</a>";
-                        output += "</div>";
 
-                        display.innerHTML = display.innerHTML + output;
+                        reqRef.on('value', function(snapshot) {
+                            var output = "";
+                            var role = "";
+
+                            if(snapshot.val()!=null) {
+                                var user_name = snapshot.val().username;
+                                var role = snapshot.val().profile_type;
+                                var id = snapshot.val().id;
+
+                                output += "<div class='req'>";
+                                output += "<p>"+user_name+"</p>";
+                                output += "<p>"+role+"</p>";
+                                output += '<button type="button" onclick="addFriend(\''+ id + '\')">Accept Friend Request</button>';
+                                output += "</div>";
+                            }
+                            else {
+                            }
+
+                            display.innerHTML = display.innerHTML + output;
+                        });
                     });
-
-                    counter += 1;
-                })
+                });
             }
             
           var id="";
@@ -143,6 +149,8 @@
               btype= updateInfo(url +btype, "btype");
               email= updateInfo(url +email, "email");
               userId= updateInfo(url +userId, "userId");
+              
+              displayRequests();
           }
           else {
               //Viewing someone elses
@@ -163,17 +171,55 @@
           function friendRequest() {
               var friendId = getUrlVars()["id"];
               //var currentUser = firebase.auth().currentUser.uid;
-              var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
+              var currentUser = "PUJRmoguPDZ18AhGZy05vpM5gJM2";
               var userRef = firebase.database().ref().child('users/'+friendId+"/friend_req");
 
-              //TODO: Send to DB
-              userRef.set ({
-                  request: currentUser
+              var newReq = userRef.push();
+              
+              newReq.set ({
+                  req: currentUser
               });
 
               alert("Friend Request Sent");
           }
+            function addFriend(reqId) {
+                var currentUser = getUrlVars()["id"];
+                var userRef = firebase.database().ref().child('users/'+currentUser+"/friend_list");
+                var friendRef = firebase.database().ref().child('users/'+reqId+"/friend_list");
+                /*
+                var newReq = friendRef.push();
+              
+                newReq.set ({
+                    friend: currentUser
+                });
+                
+                var newReq2 = userRef.push();
+              
+                newReq2.set ({
+                    friend: reqId
+                });
+                */
+                
+                deleteReq(reqId,currentUser);
+                
+                alert("You are now friends");
+            }
+            
+            function deleteReq(reqId,userId) {
+                var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
 
+                // Get the most recent request
+                ref.on("value", function(data) {
+                    var requests = data.val();
+
+                    ref.orderByChild("req").equalTo(reqId).on("child_added", function(data) {
+                        console.log(data.val());
+                        
+                        ref.remove();
+                    });
+                });
+                
+            }
           function updateInfo(value, id) {
               console.log(value);
 
@@ -199,7 +245,6 @@
           }
       </script>
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
