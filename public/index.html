@@ -170,6 +170,7 @@
             firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                 UserD = user.uid;
+                localStorage.setItem("id", user.uid);
                 // User is signed in.
                 writeUserData(user.uid, user.displayName, user.email, user.photoURL);
 

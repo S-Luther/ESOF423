@@ -36,7 +36,7 @@
 								</header>
 								<nav id="nav">
 									<ul class="actions vertical special spinY">
-										<li><a href="files.html" onclick="" class="button">Files</a></li>
+										<li><a onclick="gotofiles()" class="button">Files</a></li>
 										<li><a href="../search.html" onclick="" class="button">Search</a></li>
 
 										<li><a href="https://esof-423.firebaseapp.com/update-info.html?" class="button">Update</a></li>
@@ -61,6 +61,8 @@
             
           var id="";
 
+
+
           function getUrlVars() {
               var vars = {};
               var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -79,7 +81,7 @@
           });
 
           function gotofiles() {
-              window.location = 'files.html?id='+getUrlVars()["id"];
+              document.location.href = './files.html?id='+getUrlVars()["id"];
           }
 
           var url = "https://esof-423.firebaseio.com/users/"+getUrlVars()["id"]+"/";
@@ -92,7 +94,8 @@
 
           //Current user that is logged in
           //Change to string for developing
-          var currentUser = firebase.auth().currentUser.uid;
+          var currentUser = localStorage.getItem("id");
+          
           //var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
 
           if(currentUser==getUrlVars()["id"]){
@@ -123,7 +126,7 @@
           function friendRequest() {
               var friendId = getUrlVars()["id"];
               //var currentUser = firebase.auth().currentUser.uid;
-              var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
+              var currentUser = localStorage.getItem("id");
               var userRef = firebase.database().ref('users/'+friendId+"/friend_req").push({
                 request: currentUser
               });
