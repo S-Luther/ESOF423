@@ -113,6 +113,7 @@ function initApp() {
         if (user) {
             UserD = user.uid;
             // User is signed in.
+            localStorage.setItem("id", user.uid);
             writeUserData(user.uid, user.displayName, user.email, user.photoURL);
 
             var displayName = user.displayName;

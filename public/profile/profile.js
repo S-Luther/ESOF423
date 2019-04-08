@@ -62,7 +62,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 function gotofiles() {
-    window.location = 'files.html?id='+getUrlVars()["id"];
+    document.location.href = './files.html?id='+getUrlVars()["id"]; 
 }
 
 var url = "https://esof-423.firebaseio.com/users/"+getUrlVars()["id"]+"/";
@@ -75,8 +75,7 @@ var ppic = "profile_picture.json";
 
 //Current user that is logged in
 //Change to string for developing
-//var currentUser = firebase.auth().currentUser.uid;
-var currentUser = "zSjdTDE9ZPefC9NmcvnYHzOI7U23";
+var currentUser = localStorage.getItem("id"); 
 
 if(currentUser==getUrlVars()["id"]) {
     //Viewing your Profile
@@ -107,8 +106,8 @@ else {
 
 function friendRequest() {
     var friendId = getUrlVars()["id"];
-    //var currentUser = firebase.auth().currentUser.uid;
-    var currentUser = "PUJRmoguPDZ18AhGZy05vpM5gJM2";
+    var currentUser = localStorage.getItem("id"); 
+    
     var userRef = firebase.database().ref().child('users/'+friendId+"/friend_req");
 
     var newReq = userRef.push();
