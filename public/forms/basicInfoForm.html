@@ -14,6 +14,21 @@
         <link rel="stylesheet" href="../css/main.css">
     		<link rel="stylesheet" href="../auth/sign-up.css" type="text/css"/>
 
+        <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyDDsSMQ5fz__zVROPs58rqVnFlkcu15PF8",
+            authDomain: "esof-423.firebaseapp.com",
+            databaseURL: "https://esof-423.firebaseio.com",
+            projectId: "esof-423",
+            storageBucket: "esof-423.appspot.com",
+            messagingSenderId: "991614948455"
+          };
+          firebase.initializeApp(config);
+        </script>
+
 
   </head>
   <body>
@@ -51,7 +66,8 @@
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
               <p>Enter information below</p>
               <section id="userInfo">
-                <form action="#">
+                <!-- action="#" -->
+                <form id="MedForm" >
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-name">
                     <input class="mdl-textfield__input" type="text" id="firstName">
                     <label class="mdl-textfield__label mdl-color-text--grey-600" for="firstName">First Name...</label>
@@ -96,7 +112,7 @@
                     <label class="mdl-textfield__label" for="allergies">Please list and drug allergies</label>
                   </div>
                   <p></p>
-                  <ul class="demo-list-item mdl-list">
+                  <ul class="demo-list-item mdl-list" id="checkboxOne">
                     <h5 class="mdl-card__title-text mdl-card__title-text_checkbox">Have you ever had (Please check all that apply)</h5>
                     <p></p>
                     <li>
@@ -296,6 +312,7 @@
                     <textarea class="mdl-textfield__input" type="text" rows= "3" id="medications" ></textarea>
                     <label class="mdl-textfield__label" for="medications">Please list your current medications</label>
                   </div>
+
                 </form>
 
 
@@ -306,7 +323,7 @@
                   <!-- formValidation() -->
                   <button class="mdl-button mdl-js-button mdl-button--raised" value="submit" onclick="submitForm()" id="submitForm">Submit</button>
                 </section>
-                  <div class="divider"/>
+                  <!-- <div class="divider"/> -->
                 <section id="exit">
                   <form action="../index.html">
                     <button class="mdl-button mdl-js-button mdl-button--raised" id="exit">Exit</button>

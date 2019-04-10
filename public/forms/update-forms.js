@@ -1,23 +1,54 @@
-var config = {
-  apiKey: "AIzaSyDDsSMQ5fz__zVROPs58rqVnFlkcu15PF8",
-  authDomain: "esof-423.firebaseapp.com",
-  databaseURL: "https://esof-423.firebaseio.com",
-  projectId: "esof-423",
-  storageBucket: "esof-423.appspot.com",
-  messagingSenderId: "991614948455"
-};
+// var userId = firebase.auth().currentUser.uid;
+var userID = "jasegased";
 
-firebase.initializeApp(config);
 
-document.querySelector('.role-button').addEventListener('click', submitForm);
+// Save a new recommendation to the database, using the input in the form
+function submitForm() {
 
-function submitForm(){
-    var userId = firebase.auth().currentUser.uid;
-    var database = firebase.database();
 
-    let userRef = database.ref('documents/'+userId);
+  var fname = document.getElementById("firstName").value;
+  var lname = document.getElementById("lastName").value;
+  var bday = document.getElementById("birthDate").value;
+  var height = document.getElementById("height").value;
+  var weight = document.getElementById("weight").value;
+  var email = document.getElementById("email").value;
+  var reason = document.getElementById("reason").value;
+  var allergies = document.getElementById("allergies").value;
+  var checkboxOne = document.getElementById("checkboxOne").value;
+  var illness = document.getElementById("illness").value;
+  var operations = document.getElementById("operations").value;
+  var medications = document.getElementById("medications").value;
+  console.log(fname);
+  console.log(checkboxOne);
 
-    document.getElementById('userInfo')
+  firebase.database().ref('documents/forms/' + userID).set({
+     firstName : fname,
+     lastName : lname,
+     bithDay : bday,
+     height: height,
+     weight: weight,
+     email: email,
+     reason: reason,
+     allergies: allergies,
+     illness: illness,
+     operations: operations,
+     medications: medications
+  });
 
-    userRef.update({'formSubmitted': "yes"})
+  console.log(
+    "sending info to firebase"
+  )
 }
+
+  // Get input values from each of the form elements
+
+
+  // var bday = document.getElementById("birthDate");
+
+
+  // Push a new recommendation to the database using those values
+  // forms.push({
+  //   firstName: fname,
+  //   lastName: lname,
+  //   // bday: bday
+  // });

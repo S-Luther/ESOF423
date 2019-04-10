@@ -11,9 +11,9 @@
 
         <link rel="stylesheet" href="index.css">
         <link rel="stylesheet" href="css/global.css">
-        
+
         <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
-        
+
         <script>
           // Initialize Firebase
           var config = {
@@ -73,7 +73,7 @@
             if(!firebase.database().ref('users/' + userId)){
             firebase.database().ref('users/' + userId).set({
               username: name,
-                id: userId,
+              id: userId,
               email: email,
               profile_picture : imageUrl,
               profile_type : "Patient",
@@ -90,7 +90,7 @@
         }
             });
 
-          }else{ 
+          }else{
             firebase.database().ref('users/' + userId).set({
               username: name,
                 id: userId,
@@ -235,7 +235,7 @@
 
         <!-- Login Field -->
         <div class="userlogin-container">
-          
+
         <section id="login-field">
                 <div class="google-box">
         <section id="google-login">
