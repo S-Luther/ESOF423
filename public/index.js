@@ -34,13 +34,7 @@ function writeUserData(userId, name, email, imageUrl) {
             profile_type : "Patient",
             age : "N/A",
             gender : "N/A",
-            phone : "phoneNumber",
-            "friend_req" : {
-                "test":"data"
-            },
-            "friend_list" : {
-                "test":"data"
-            }
+            phone : "phoneNumber"
         });
     }
     else { 
@@ -52,13 +46,7 @@ function writeUserData(userId, name, email, imageUrl) {
             profile_type : "Patient",
             age : "N/A",
             gender : "N/A",
-            phone : "phoneNumber",
-            "friend_req" : {
-                "test":"data"
-            },
-            "friend_list" : {
-                "test":"data"
-            }
+            phone : "phoneNumber"
         });
     }
     document.getElementById("theboi").disabled = false;

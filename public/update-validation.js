@@ -32,5 +32,5 @@ function updateEmail(){
     }
     else {
         alert('Email Format Error');
-    } 
+    }
 }
