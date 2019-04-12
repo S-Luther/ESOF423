@@ -1,11 +1,23 @@
 
 var url = "https://esof-423.firebaseio.com/documents/" + localStorage.getItem("id")+"/document.json"
-
+counter =0;
 fetch(url)
     .then(response => response.json())
     .then(data => {
-      alert(data.document);
       displayFile(data.document);
+      var ref = firebase.database().ref("documents/" + localStorage.getItem("id")+"/document");
+    //alert(ref);
+    // Loop through to fill arr with names and print them to screen
+      if(ref == null || ref == undefined){}
+
+      else{
+      ref.on("child_added", function(data) {
+          if(data.val().document == null || data.val().document == undefined){}
+          else{
+            displayFile(data.val().document);
+          }
+
+      })}
       //data
 
         // data.forEach(function(element){
@@ -30,8 +42,9 @@ function handleFileUploadChange(e) {
 
 
 function displayFile(dl){
-  document.getElementById("files").innerHTML = document.getElementById("files").innerHTML + "<img src=\"" + dl + "\" style=\"width:25%; height:auto;\">"
-
+  if(counter>0){
+    document.getElementById("files").innerHTML = document.getElementById("files").innerHTML + "<img src=\"" + dl + "\" style=\"width:25%; height:30vh;\" onerror=\"this.onerror=null;this.src='../images/default.jpg';\">"
+  }counter++;
 }
 
 function getUrlVars() {
@@ -54,7 +67,7 @@ function handleFileUploadSubmit(e) {
     uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
       displayFile(downloadURL)
       console.log('File available at', downloadURL);
-      firebase.database().ref('documents/'+localStorage.getItem("id")+"/document").set({
+      firebase.database().ref('documents/'+localStorage.getItem("id")+"/document").push({
         document: downloadURL
       });
 
