@@ -1,10 +1,20 @@
-// var userId = firebase.auth().currentUser.uid;
-var userID = "jasegased";
 
+// initFirebase();
+var userID;
+var uid = localStorage.getItem("current_uid");
+
+if (! uid) {
+  console.log("Current User: " + userID);
+  userID = "jasegased";
+}
+
+else {
+  userID = uid;
+  console.log("Current User: " + userID);
+}
 
 // Save a new recommendation to the database, using the input in the form
 function submitForm() {
-
 
   var fname = document.getElementById("firstName").value;
   var lname = document.getElementById("lastName").value;
