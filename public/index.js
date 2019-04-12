@@ -71,7 +71,7 @@ function initApp() {
         document.getElementById('quickstart-oauthtoken').textContent = 'null';
     }
     var user = result.user;
-    localStorage.setItem(lsUser = user);
+    localStorage.setItem("lsUser", user);
 
     // calls funtion to write to firebase
     // this might need to be called from a different location if data is being overwritten
