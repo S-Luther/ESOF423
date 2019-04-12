@@ -1,0 +1,11 @@
+User Test: (Photo student, 20 yrs old)
+  user noticed typo (and drug allergies instead of any drug allergies)
+  user noticed gout was on list twice.
+  user noticed after submit forms(when updating medical history) that it didn't do anything.
+  user did not take testing seriously.
+  user said interface was a little confusing.
+  can't figure out stuff about
+  user sent friend request, and it didn't work.
+  thought update information(between patient and doctor) was unneeded, and that patients could say they are doctors.
+  user noticed oauth info and asked why it was there.
+  user logged out.
