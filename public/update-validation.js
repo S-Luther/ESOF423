@@ -20,7 +20,6 @@ function setRole(){
 }
 
 function updateEmail(){
-    /*
     var userId = firebase.auth().currentUser.uid;
     let userRef = firebase.database().ref('users/'+userId);
     
@@ -34,24 +33,5 @@ function updateEmail(){
     else {
         alert('Email Format Error');
     }
-    */
-    var friendId = "H7T34fH7u2W6kJYWa4gpdEjNkEf2";
-    var currentUser = "PUJRmoguPDZ18AhGZy05vpM5gJM2";
     
-    var userRef = firebase.database().ref().child("users/"+friendId+"/friend_req");
-    
-    var newReq = userRef.push();
-    var reqKey = newReq.key;
-    
-    newReq.set({
-        req: currentUser,
-        key: reqKey
-    },function(error){
-        if(error){
-            alert("There was an error sending the friend request")
-        }
-        else{
-            alert("Friend Request Sent");
-        }
-    });
 }
