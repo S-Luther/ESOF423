@@ -56,14 +56,15 @@ else {
     document.getElementById("nav").style.display = "none";
 
     //Add friend button goes here
-    document.getElementById("addFriend").innerHTML = "<a href='' onclick='friendRequest()' class='button'>Add Friend</a>";
+    document.getElementById("addFriend").innerHTML = "<button type='button' onclick='friendRequest()'>Add Friend</button>";
 }
 
 function friendRequest() {
     var friendId = getUrlVars()["id"];
     var currentUser = localStorage.getItem("id");
     
-    var userRef = firebase.database().ref("users/"+friendId+"/friend_req");
+    
+    var userRef = firebase.database().ref().child("users/"+friendId+"/friend_req");
     
     var newReq = userRef.push();
     var reqKey = newReq.key;
@@ -71,13 +72,6 @@ function friendRequest() {
     newReq.set({
         req: currentUser,
         key: reqKey
-    },function(error){
-        if(error){
-            alert("There was an error sending the friend request")
-        }
-        else{
-            alert("Friend Request Sent");
-        }
     });   
 }
 
