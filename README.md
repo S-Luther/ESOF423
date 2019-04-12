@@ -1,11 +1,16 @@
 # ESOF423
-Medical Social Network App for ESOF 423
+##### Medical Social Network App for ESOF 423
 https://esof-423.firebaseapp.com
 
-This repository is a firebase based web-app built using primarily JavaScript.
+
+### User Documentation:
+
+Welcome to our Medical Social Network Application. The purpose of the this website it to link people to their doctors. Within this web application, you can easily find and friend your doctors, add previous medical records, fill out generic forms, and quickily retreive your the most up to date medical records - all in one secure, easy to use location. 
 
 
-User Documentation:
+
+#### Most Common Questions:
+
 
 To create a new account - Either login with you existing Google account or create a new Google account. Once logged in, the Medical App will create a local profile. 
 
@@ -15,6 +20,8 @@ To add documents - Click files and upload
 
 To add "Friends" - Click search and find a friend that you are wanting to add. Click the persons name and add them as a friend
 
+
+This repository is a firebase based web-app built using primarily JavaScript.
 
 
 Sheets Link:
