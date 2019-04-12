@@ -29,11 +29,7 @@ var email = "email.json";
 var userId = "age.json";
 var ppic = "profile_picture.json";
 
-//Current user that is logged in
-//Change to string for developing
-//var currentUser = localStorage.getItem("id");
-var currentUser = "8YpNiadkgRROaxCVV2qJIwuJpZB3";
-console.log(currentUser);
+var currentUser = localStorage.getItem("id");
 
 if(currentUser==getUrlVars()["id"]) {
     //Viewing your Profile
@@ -67,7 +63,7 @@ function friendRequest() {
     var friendId = getUrlVars()["id"];
     var currentUser = localStorage.getItem("id");
     
-    var userRef = firebase.database().ref().child("users/"+friendId+"/friend_req");
+    var userRef = firebase.database().ref("users/"+friendId+"/friend_req");
     
     var newReq = userRef.push();
     var reqKey = newReq.key;
@@ -75,13 +71,18 @@ function friendRequest() {
     newReq.set({
         req: currentUser,
         key: reqKey
-    });
-    
-    alert("Friend Request Sent");
+    },function(error){
+        if(error){
+            alert("There was an error sending the friend request")
+        }
+        else{
+            alert("Friend Request Sent");
+        }
+    });   
 }
 
 function alreadyFriends(reqId) {
-    var userId = "8YpNiadkgRROaxCVV2qJIwuJpZB3";
+    var userId = localStorage.getItem("id");
     var flag = false;
 
     var ref = firebase.database().ref().child('users/'+userId+"/friend_list");
@@ -134,6 +135,15 @@ function addFriend(reqId) {
     }
 }
 
+function removeRequest(reqId) {
+    var currentUser = getUrlVars()["id"];
+    
+    deleteReq(reqId,currentUser);
+    
+    //Refresh requests
+    location = location;
+}
+
 function deleteReq(reqId,userId) {
     var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
 
@@ -176,8 +186,7 @@ function removeFriend(friendId) {
 function displayRequests() {
     var display = document.getElementById("recentReq");
 
-    //var currentUser = firebase.auth().currentUser.uid;
-    var userId = "8YpNiadkgRROaxCVV2qJIwuJpZB3";
+    var userId = localStorage.getItem("id");
 
     var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
 
@@ -201,6 +210,7 @@ function displayRequests() {
                         var id = snapshot.val().id;
 
                         output += "<div class='req'>";
+                        output += '<a id="x-button" href="" onclick="removeRequest(\''+ id + '\')">X</a>'
                         output += "<p>"+user_name+"</p>";
                         output += "<p>"+role+"</p>";
                         output += '<button type="button" onclick="addFriend(\''+ id + '\')">Accept Friend Request</button>';
@@ -219,8 +229,7 @@ function displayRequests() {
 function displayFriends() {
     var display = document.getElementById("friendList");
 
-    //var currentUser = firebase.auth().currentUser.uid;
-    var userId = "8YpNiadkgRROaxCVV2qJIwuJpZB3";
+    var userId = localStorage.getItem("id");
 
     var ref = firebase.database().ref().child('users/'+userId+"/friend_list");
 

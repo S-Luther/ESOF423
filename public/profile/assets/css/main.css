@@ -1562,6 +1562,11 @@
     margin-bottom: 10px;
 }
 
+#x-button {
+    float: right;
+    margin-right: 6px;
+}
+
 .req {
     background-color: rgba(0,0,255,.05);
     margin-left: auto;
