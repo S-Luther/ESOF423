@@ -37,7 +37,7 @@ function writeUserData(userId, name, email, imageUrl) {
             phone : "phoneNumber"
         });
     }
-    else { 
+    else {
         firebase.database().ref('users/' + userId).set({
             username: name,
             id: userId,
@@ -75,7 +75,7 @@ function initApp() {
     // calls funtion to write to firebase
     // this might need to be called from a different location if data is being overwritten
     writeUserData(user.uid, user.displayName, user.email, user.photoURL);
-    
+
     }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -84,7 +84,7 @@ function initApp() {
         var email = error.email;
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
-        
+
         if (errorCode === 'auth/account-exists-with-different-credential') {
             alert('You have already signed up with a different auth provider for that email.');
             // If you are using multiple auth providers on your app you should handle linking
@@ -128,6 +128,7 @@ function initApp() {
     });
 
     document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
+    document.getElementById('goToProf').addEventListener('click', change);
 }
 
 window.onload = function() {
