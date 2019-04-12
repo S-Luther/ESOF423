@@ -1,4 +1,5 @@
 var id="";
+var uid = localStorage.getItem("current_uid");
 
 function getUrlVars() {
     var vars = {};
@@ -18,7 +19,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 function gotofiles() {
-    document.location.href = './files.html?id='+getUrlVars()["id"]; 
+    document.location.href = './files.html?id='+getUrlVars()["id"];
 }
 
 var url = "https://esof-423.firebaseio.com/users/"+getUrlVars()["id"]+"/";
@@ -62,17 +63,17 @@ else {
 function friendRequest() {
     var friendId = getUrlVars()["id"];
     var currentUser = localStorage.getItem("id");
-    
-    
+
+
     var userRef = firebase.database().ref().child("users/"+friendId+"/friend_req");
-    
+
     var newReq = userRef.push();
     var reqKey = newReq.key;
-    
+
     newReq.set({
         req: currentUser,
         key: reqKey
-    });   
+    });
 }
 
 function alreadyFriends(reqId) {
@@ -86,20 +87,20 @@ function alreadyFriends(reqId) {
         var requests = data.val();
 
         ref.orderByChild("friend").on("child_added", function(data) {
-            
+
             if(data.val().friend == reqId) {
                 flag = true;
             }
         });
     });
-    
+
     return flag;
 }
 
 function addFriend(reqId) {
     var currentUser = getUrlVars()["id"];
     if (!alreadyFriends(reqId)) {
-        
+
         var userRef = firebase.database().ref().child('users/'+currentUser+"/friend_list");
         var friendRef = firebase.database().ref().child('users/'+reqId+"/friend_list");
 
@@ -124,16 +125,16 @@ function addFriend(reqId) {
     }
     else {
         deleteReq(reqId,currentUser)
-        
+
         alert("You are already friends");
     }
 }
 
 function removeRequest(reqId) {
     var currentUser = getUrlVars()["id"];
-    
+
     deleteReq(reqId,currentUser);
-    
+
     //Refresh requests
     location = location;
 }
@@ -150,18 +151,18 @@ function deleteReq(reqId,userId) {
             ref.child(data.val().key+"/req").remove();
         });
     });
-    
+
     //Refresh requests
     location = location;
 }
 
 function removeFriend(friendId) {
     var currentUser = getUrlVars()["id"];
-    
+
     var userRef = firebase.database().ref().child('users/'+currentUser+"/friend_list");
     var friendRef = firebase.database().ref().child('users/'+friendId+"/friend_list");
-    
-    userRef.on("value", function(data) { 
+
+    userRef.on("value", function(data) {
         userRef.orderByChild("friend").on("child_added", function(snapshot) {
             userRef.child(snapshot.val().key+"/friend").remove();
             userRef.child(snapshot.val().key+"/key").remove();
@@ -171,7 +172,7 @@ function removeFriend(friendId) {
         friendRef.orderByChild("friend").on("child_added", function(snapshot) {
             friendRef.child(snapshot.val().key+"/friend").remove();
             friendRef.child(snapshot.val().key+"/key").remove();
-        });   
+        });
     });
 
     //Refresh requests
@@ -187,7 +188,7 @@ function displayRequests() {
     // Get the requests
     ref.on("value", function(data) {
         var requests = data.val();
-        
+
         if(data.val()!=null) {
             display.innerHTML = display.innerHTML + "<h4>Friend Requests</h4>";
             ref.orderByChild("req").on("child_added", function(data) {
@@ -230,7 +231,7 @@ function displayFriends() {
     // Get friends from friend list
     ref.on("value", function(data) {
         var requests = data.val();
-        
+
         if(data.val()!=null) {
             display.innerHTML = display.innerHTML + "<h4>Friend List</h4>";
             ref.orderByChild("friend").on("child_added", function(data) {

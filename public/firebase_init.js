@@ -9,7 +9,3 @@ var config = {
 };
 
 firebase.initializeApp(config);
-
-function initFirebase(){
-  firebase.initializeApp(config);
-}
