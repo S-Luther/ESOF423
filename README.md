@@ -12,16 +12,34 @@ Welcome to our Medical Social Network Application. The purpose of the this websi
 #### Most Common Questions:
 
 
-To create a new account - Either login with you existing Google account or create a new Google account. Once logged in, the Medical App will create a local profile. 
+##### To create a new account: 
+Either login with you existing Google account or create a new Google account. Once logged in, the Medical App will create a   local profile. Your new medical profile will need to updated so that all your information is up to date and completely         filled out. 
 
-To update information - Go to My Profile and click update.
+<p></p>
 
-To add documents - Click files and upload
+##### To update information:
+From your profile page, click the update button. Check if you are a doctor or patient and update your email address. Press submit below whichever feild is being updated. 
 
-To add "Friends" - Click search and find a friend that you are wanting to add. Click the persons name and add them as a friend
+
+##### To add documents:
+From your profile screen, click Files. From here you can see and add files. To add a file, simply click Choose File and add the document you'd like to upload. 
 
 
-This repository is a firebase based web-app built using primarily JavaScript.
+##### To add friends: 
+From your profile page, click search and type in the friend you are wanting to add. Press search and click on the name of the person. A quick look at their profile will appear and give you the option to add them as a friend. Click Add Friend. Once completed, a friend request will be sent and you will be notified once they have accepted the friend invite. 
+
+##### To create generic form:
+From you profile page, click forms. A generic medical form will load. Fill out the information and click 
+Submit. The doc will be added to your files and can be shared with doctors. 
+
+
+### Dev Docs
+
+This repository is a firebase based web-app built using primarily JavaScript. All storage for files and our DB is contained with the firebase API and accessed through Firebase sepecifc .js commands. 
+
+#### Needs:
+
+* Example  
 
 
 Sheets Link:
