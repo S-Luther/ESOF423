@@ -37,18 +37,6 @@ function writeUserData(userId, name, email, imageUrl) {
             phone : "phoneNumber"
         });
     }
-    else {
-        firebase.database().ref('users/' + userId).set({
-            username: name,
-            id: userId,
-            email: email,
-            profile_picture : imageUrl,
-            profile_type : "Patient",
-            age : "N/A",
-            gender : "N/A",
-            phone : "phoneNumber"
-        });
-    }
     document.getElementById("theboi").disabled = false;
 
     console.log(fireUser.createdAt)

@@ -394,3 +394,7 @@ function updateInfo(value, id) {
     console.error('An error ocurred', err);
   })
 }
+
+function change() {
+    window.location.href = "profile/profile.html?id="+localStorage.getItem("id");
+}
