@@ -6,17 +6,30 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+        
+        <link rel="stylesheet" href="assets/css/profile.css"/>
 		<link rel="stylesheet" href="assets/css/main.css"/>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
         <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-				<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
         <script src="../firebase_init.js"></script>
-				<script src="../currentUser.js"></script>
+        <script src="../currentUser.js"></script>
 
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
+    <header>
+        <div class="container-profile">
+            <img src="../images/logo.png" id="logo">
+            <ul id="nav-profile">
+                <li><a href="../index.html">Home</a></li>
+                <li><a id="goToProf">Profile</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </header>
 	<body class="is-loading-0 is-loading-1">
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -52,7 +65,6 @@
 					</article>
             </div>
         <script src="profile.js"></script>
-				<script src="../requests.js"></script>
         <!-- <script src='friendRequest.js'></script> -->
 		<!-- Scripts -->
         <script src="assets/js/skel.min.js"></script>

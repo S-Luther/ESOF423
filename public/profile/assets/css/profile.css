@@ -5,11 +5,6 @@ body {
     padding: 0px;
 }
 
-.container {
-    width: 800px;
-    margin: 0 auto;
-}
-
 .container-profile {
     width: 800px;
     margin: 0 auto;
@@ -21,60 +16,39 @@ body {
 
 header {
     background-color: #eee;
-    border-bottom: 2px solid #fff;
-    box-shadow: 0 0 15px rbga(0,0,0,.25);
+    margin: 0px;
+    margin-bottom: -70px;
 }
 
-#search {
-    background-color: #000;
-    padding: 15px;
-}
-
-#search form {
-    float: right;
-    padding-left: 10px;
-}
-
-#search i {
-    color: #fff;
-    font-size: 16px;
-    float: right;
-    margin: 0 10px;
-}
 
 #logo {
     height: 100px;
     float: left;
 }
 
-#nav {
+#nav-profile {
     margin: 0px;
     padding: 0px;
     text-align: right;
     float: right;
 }
 
-#nav li {
+#nav-profile li {
     display: block;
     float: left;
 }
 
-#nav li a {
+#nav-profile li a {
     display: block;
-    padding: 42px 15px;
+    padding: 30px 15px;
     text-decoration: none;
     font-weight: bold;
     text-transform: uppercase;
     color: #666;
-    border-right: 1px dotted #aaa;
     transition: all .2s linear;
 }
 
-#nav li a#first-link {
-    border-left: 1px dotted #aaa;
-}
-
-#nav li a:hover {
+#nav-profile li a:hover {
     background-color: skyblue;
     color:white;
 }

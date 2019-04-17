@@ -45,6 +45,7 @@ if(currentUser==getUrlVars()["id"]) {
     displayRequests();
 }
 else {
+    friendsChecker(getUrlVars()["id"]);
     //Viewing someone elses
     ppic= updateInfo(url +ppic, "ppic");
     fname= updateInfo(url + fname, "fname");
@@ -56,14 +57,13 @@ else {
     document.getElementById("lname").style.display = "none";
     document.getElementById("nav").style.display = "none";
 
-    //Add friend button goes here
-    document.getElementById("addFriend").innerHTML = "<button type='button' onclick='friendRequest()'>Add Friend</button>";
+    reqSent(getUrlVars()["id"]);
 }
 
 function friendRequest() {
+    console.log("friendRequest");
     var friendId = getUrlVars()["id"];
     var currentUser = localStorage.getItem("id");
-
 
     var userRef = firebase.database().ref().child("users/"+friendId+"/friend_req");
 
@@ -73,10 +73,58 @@ function friendRequest() {
     newReq.set({
         req: currentUser,
         key: reqKey
+    },function(error){
+        if(error){
+            alert("Error : "+error);
+        }
+        else{
+            alert("Friend Request Sent");
+        }
+    });
+    
+    var pendingRef = firebase.database().ref().child("users/"+currentUser+"/friend_req");
+    
+    var newReq = pendingRef.push();
+    var reqKey = newReq.key;
+    
+    newReq.set({
+       req:friendId,
+        key: reqKey,
+        pending: "true"
+    },function(error){
+        if(error){
+            alert("Error : "+error);
+        }
     });
 }
 
-function alreadyFriends(reqId) {
+function reqSent(reqId) {
+    console.log("reqSent");
+    
+    var userId = localStorage.getItem("id");
+    var flag = false;
+
+    var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
+
+    // Get the most recent request
+    ref.on("value", function(data) {
+        if(data!=null) {
+            ref.orderByChild("req").equalTo(reqId).on("child_added", function(snapshot) {
+                if(snapshot!=null) {
+                    flag = true;
+                    document.getElementById("addFriend").innerHTML = "<button type='button' disabled>Request Pending</button>";
+                }
+            });
+        }
+    });
+
+    if(!flag) {
+        document.getElementById("addFriend").innerHTML = "<button type='button' onclick='friendRequest()'>Add Friend</button>";
+    }
+}
+
+function friendsChecker(reqId) {
+    console.log("friend Checker");
     var userId = localStorage.getItem("id");
     var flag = false;
 
@@ -84,10 +132,24 @@ function alreadyFriends(reqId) {
 
     // Get the most recent request
     ref.on("value", function(data) {
-        var requests = data.val();
+        ref.orderByChild("friend").equalTo(reqId).on("child_added", function(snapshot) {
+            flag = true;
+            
+            document.getElementById("addFriend").innerHTML = "<button type='button' disabled>You are already friends</button>";
+        });
+    });
+}
 
+function alreadyFriends(reqId) {
+    console.log("alreadyFriends boolean checker");
+    var userId = localStorage.getItem("id");
+    var flag = false;
+
+    var ref = firebase.database().ref().child('users/'+userId+"/friend_list");
+
+    // Get the most recent request
+    ref.on("value", function(data) {
         ref.orderByChild("friend").on("child_added", function(data) {
-
             if(data.val().friend == reqId) {
                 flag = true;
             }
@@ -98,7 +160,10 @@ function alreadyFriends(reqId) {
 }
 
 function addFriend(reqId) {
+    console.log("addFriend");
+    
     var currentUser = getUrlVars()["id"];
+    
     if (!alreadyFriends(reqId)) {
 
         var userRef = firebase.database().ref().child('users/'+currentUser+"/friend_list");
@@ -131,6 +196,7 @@ function addFriend(reqId) {
 }
 
 function removeRequest(reqId) {
+    console.log("removeRequest");
     var currentUser = getUrlVars()["id"];
 
     deleteReq(reqId,currentUser);
@@ -140,6 +206,7 @@ function removeRequest(reqId) {
 }
 
 function deleteReq(reqId,userId) {
+    console.log("deleteReq");
     var ref = firebase.database().ref().child('users/'+userId+"/friend_req");
 
     // Get the most recent request
@@ -149,6 +216,20 @@ function deleteReq(reqId,userId) {
         ref.orderByChild("req").equalTo(reqId).on("child_added", function(data) {
             ref.child(data.val().key+"/key").remove();
             ref.child(data.val().key+"/req").remove();
+            ref.child(data.val().key+"/pending").remove();
+        });
+    });
+    
+    var ref = firebase.database().ref().child('users/'+reqId+"/friend_req");
+
+    // Get the most recent request
+    ref.on("value", function(data) {
+        var requests = data.val();
+
+        ref.orderByChild("req").equalTo(currentUser).on("child_added", function(data) {
+            ref.child(data.val().key+"/key").remove();
+            ref.child(data.val().key+"/req").remove();
+            ref.child(data.val().key+"/pending").remove();
         });
     });
 
@@ -157,6 +238,7 @@ function deleteReq(reqId,userId) {
 }
 
 function removeFriend(friendId) {
+    console.log("removeFriend");
     var currentUser = getUrlVars()["id"];
 
     var userRef = firebase.database().ref().child('users/'+currentUser+"/friend_list");
@@ -179,6 +261,7 @@ function removeFriend(friendId) {
     location = location;
 }
 function displayRequests() {
+    console.log("displayRequests");
     var display = document.getElementById("recentReq");
 
     var userId = localStorage.getItem("id");
@@ -187,41 +270,68 @@ function displayRequests() {
 
     // Get the requests
     ref.on("value", function(data) {
-        var requests = data.val();
-
         if(data.val()!=null) {
             display.innerHTML = display.innerHTML + "<h4>Friend Requests</h4>";
             ref.orderByChild("req").on("child_added", function(data) {
                 //For each req display a new req div
                 var reqRef = firebase.database().ref().child('users/'+data.val().req);
+                
+                console.log(data.val().pending);
+                
+                //If the request is pending
+                if(data.val().pending == "true") {
+                    reqRef.on('value', function(snapshot) {
+                        var output = "";
+                        var role = "";
 
-                reqRef.on('value', function(snapshot) {
-                    var output = "";
-                    var role = "";
+                        if(snapshot.val()!=null) {
+                            var user_name = snapshot.val().username;
+                            var role = snapshot.val().profile_type;
+                            var id = snapshot.val().id;
 
-                    if(snapshot.val()!=null) {
-                        var user_name = snapshot.val().username;
-                        var role = snapshot.val().profile_type;
-                        var id = snapshot.val().id;
+                            output += "<div class='req'>";
+                            output += '<a id="x-button" href="" onclick="removeRequest(\''+ id + '\')">X</a>'
+                            output += "<p>"+user_name+"</p>";
+                            output += "<p>"+role+"</p>";
+                            output += '<button type="button" disabled>Pending Friend Request</button>';
+                            output += "</div>";
+                        }
+                        else {
+                        }
 
-                        output += "<div class='req'>";
-                        output += '<a id="x-button" href="" onclick="removeRequest(\''+ id + '\')">X</a>'
-                        output += "<p>"+user_name+"</p>";
-                        output += "<p>"+role+"</p>";
-                        output += '<button type="button" onclick="addFriend(\''+ id + '\')">Accept Friend Request</button>';
-                        output += "</div>";
-                    }
-                    else {
-                    }
+                        display.innerHTML = display.innerHTML + output;
+                    });
+                }
+                else {
+                    reqRef.on('value', function(snapshot) {
+                        var output = "";
+                        var role = "";
 
-                    display.innerHTML = display.innerHTML + output;
-                });
+                        if(snapshot.val()!=null) {
+                            var user_name = snapshot.val().username;
+                            var role = snapshot.val().profile_type;
+                            var id = snapshot.val().id;
+
+                            output += "<div class='req'>";
+                            output += '<a id="x-button" href="" onclick="removeRequest(\''+ id + '\')">X</a>'
+                            output += "<p>"+user_name+"</p>";
+                            output += "<p>"+role+"</p>";
+                            output += '<button type="button" onclick="addFriend(\''+ id + '\')">Accept Friend Request</button>';
+                            output += "</div>";
+                        }
+                        else {
+                        }
+
+                        display.innerHTML = display.innerHTML + output;
+                    });
+                }
             });
         }
     });
 }
 
 function displayFriends() {
+    console.log("displayFriends");
     var display = document.getElementById("friendList");
 
     var userId = localStorage.getItem("id");
