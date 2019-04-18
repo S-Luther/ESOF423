@@ -1,9 +1,4 @@
-var getRole = require('../getRole');
 var expect = require('chai').expect;
+//removed var getRole, since the function was removed.
 
-//begin test
-describe('#getRole()', function(){
-    it('should return true', function(){
-        expect(getRole(userRef)).to.equal(true);
-    })
-})
+//removed getRole test, since it was removed.
