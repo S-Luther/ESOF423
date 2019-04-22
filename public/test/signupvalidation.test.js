@@ -1,7 +1,13 @@
-var allLetter = require('../allLetter');
-var userid_validation = require('../userid_validation');
-var ValidateEmail = require('../ValidateEmail');
 var expect = require('chai').expect;
+var proxyquire = require('proxyquire');
+var pathStub = { };
+var allLetter = proxyquire('../auth/signupvalidation.js',{:pathStub});
+var userid_validation = proxyquire('../auth/signupvalidation.js',{'../auth/signupvalidation.js':pathStub});
+var ValidateEmail = proxyquire('../auth/signupvalidation.js',{:pathStub});
+/*TODO:
+  1.Figure out correct things for path stubs in proxyquire.
+  2.Make sure tests run as expected.
+*/
 
 //begin test for allletter, the function that checks if a user's username contains only letters.
 describe('#allLetter()', function(){
@@ -14,8 +20,8 @@ describe('#allLetter()', function(){
         expect(allLetter(uname)).to.equal(false);//test case of numbers and letters.
         uname="";
         expect(allLetter(uname)).to.equal(false);//test case of an empty username.
-    })
-})
+    });
+});
 
 //begin test for userid_validation, the function that checks if the userID is empty, and is between a specified range of lenghts.
 describe('#userid_validation()', function(){
@@ -36,8 +42,8 @@ describe('#userid_validation()', function(){
       expect(userid_validation(userID, mx, my)).to.equal(false);//test case for userID of length mx-1, should return false
       userID = "12345678";
       expect(userid_validation(userID, mx, my)).to.equal(true);//test case for userID in between mx and my. should return true
-    })
-})
+    });
+});
 
 //begin test for ValidateEmail, the function that validates whether the user has submitted an email address in the correct format.
 describe('#ValidateEmail()', function(){
@@ -46,5 +52,5 @@ describe('#ValidateEmail()', function(){
         expect(ValidateEmail("thisishopefullynotarealwebsite.com")).to.equal(false);//test case of thisishopefullynotarealwebsite.com, which should return false
         expect(ValidateEmail("thisishopefullynotarealwebsite")).to.equal(false);//test case of thisishopefullynotarealwebsite, which should return false
         expect(ValidateEmail("thisis.not@anemail")).to.equal(false);//test case of thisis.not@anemail, which should return false
-    })
-})
+    });
+});
