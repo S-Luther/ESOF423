@@ -23,20 +23,27 @@
         </div>
     </header>
     <body>
-      <h1>Update Information</h1>
-        <form name='role'>
-            <input type="radio" name="role" id='patient' value="patient"> Patient<br>
-            <input type="radio" name="role" id='doctor' value="doctor"> Doctor<br>
-        </form>
-        <button class="role-button" value="roleSubmit" onclick="setRole()">Submit</button>
-      <form name='update'>
-          <ul>
-            <li><label for="email">Update Email:</label></li>
-            <li><input type="email" id="email"/></li>
-            </ul>
-        </form>
-        <div class="clear"></div>
-        <button value="submit" onclick="updateEmail()">Submit</button>
+        <div class="container">
+          <h1>Update Information</h1>
+            <form name='role' id="role-form">
+                <input type="radio" name="role" id='patient' value="patient"> Patient<br>
+                <input type="radio" name="role" id='doctor' value="doctor"> Doctor<br>
+            </form>
+            <button class="role-button" value="roleSubmit" onclick="setRole()">Submit</button>
+            <h3>Enter new information</h3>
+            <form name='update' id="update-form">
+                <ul>
+                    <li><label for="email">Email:</label></li>
+                    <li><input type="email" id="email"/></li>
+                    <li><label for="age">Age:</label></li>
+                    <li><input type="number" id="age" min="0"/></li>
+                    <li><label for="email">Gender:</label></li>
+                    <li><input type="text" id="gender"/></li>
+                </ul>
+            </form>
+            <div class="clear"></div>
+            <button value="submit" onclick="updateInfo()">Submit</button>
+        </div>
     </body>
     <script src="update-validation.js"></script>
 </html>
