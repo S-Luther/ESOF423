@@ -5,8 +5,7 @@ function updateInfo(){
     var age = document.getElementById("age").value;
     var gender = document.getElementById("gender").value;
     
-    //var userId = firebase.auth().currentUser.uid;
-    var userId = "8YpNiadkgRROaxCVV2qJIwuJpZB3";
+    var userId = firebase.auth().currentUser.uid;
     var userRef = firebase.database().ref('users/'+userId);
     
     if(email!=""&&validEmail(email)){
@@ -78,8 +77,7 @@ function updateRole(userRef,role){
 }
 
 function setRole(){
-    //var userId = firebase.auth().currentUser.uid;
-    var userId = "8YpNiadkgRROaxCVV2qJIwuJpZB3";
+    var userId = firebase.auth().currentUser.uid;
     var userRef = firebase.database().ref('users/'+userId);
     
     role = '';
