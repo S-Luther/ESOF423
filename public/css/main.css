@@ -14,7 +14,8 @@ li a {
 }
 
 .mdl-textfield__label{
-    color: #fff;
+  /* color: inherit; */
+    /* color: #fff; */
 }
 .mdl-card {
   overflow: visible;
