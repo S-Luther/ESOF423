@@ -50,32 +50,41 @@
       });
       alert("Shared");
     }
-
-  	function myFunction() {
-      var counter = 0;
-    var user_arr = [];
-  var display = document.getElementById("friends");
-    var ref = firebase.database().ref().child('users');
+    function myFunction() {
+        var counter = 0;
+        var user_arr = [];
+        var display = document.getElementById("friends");
+        var userId = localStorage.getItem("id");
+        var ref = firebase.database().ref().child('users/'+userId+"/friend_list");
     
-    // Loop through to fill arr with names and print them to screen
-    ref.orderByChild("username").on("child_added", function(data) {
-        user_arr[counter] = data.val().username;
-        
-        output = "";
-        
-        output += "<div class='users'>";
-        output += "<p class='username' onclick=\"share('"+ data.val().id + "')\">" + user_arr[counter] + "</p>"
-        output += "</div>";
-        
-        display.innerHTML = display.innerHTML + output;
-        
-        counter += 1;
-    })
+        // Get Friends
+        ref.on("value", function(data) {
+            
+            if(data.val()!=null) {
+                ref.orderByChild("friend").on("child_added", function(data) {
+                   var reqRef = firebase.database().ref().child('users/'+data.val().friend);
+                    
+                    reqRef.on('value', function(snapshot) {
+                        user_arr[counter] = snapshot.val().username;
+                
+                        output = "";
 
-      var popup = document.getElementById("myPopup");
-      popup.classList.toggle("show");
+                        output += "<div class='users'>";
+                        output += "<p class='username' onclick=\"share('"+ snapshot.val().id + "')\">" + user_arr[counter] + "</p>"
+                        output += "</div>";
+
+                        display.innerHTML = display.innerHTML + output;
+
+                        counter += 1;
+                    });
+                });
+            }
+        });
+
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
     }
-		function goback(){
+    function goback(){
 		  window.history.back();
 		}
 		var v = document.getElementById("file");
