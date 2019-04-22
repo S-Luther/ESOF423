@@ -18,10 +18,63 @@
         <div id="files" style="max-width: 100vw; max-height: 60vh; margin-top: 10vh; text-align: center">
         	 <img id="file" style="max-width: 60vw; max-height: 60vh;"/>
         	 <br>
-        	 <button class="file-submit">SHARE</button><button onclick="goback()" class="">HOME</button>
+        	 <button class="file-submit" onclick="myFunction()">SHARE</button>
+           <div class="popup">
+            <span class="popuptext" id="myPopup"><center>FRIENDS</center><hr><div id="friends"></div></span>
+           </div>
+           <button onclick="goback()" class="">HOME</button>
+
         </div>
 	</body>
 	<script>
+
+
+    // for (i = 0; i < user_arr.length; i++) {
+    //     if (user_arr[i].toLowerCase().includes(input.toLowerCase())) {
+    //         ref.orderByChild("username").equalTo(user_arr[i]).on("child_added", function(data) {
+    //             output = "";
+
+    //             output += "<div class='users'>";
+    //             output += '<a class="user-info" href="profile/profile.html?id=' + data.val().id +'">'+data.val().username+'</a>'
+    //             output += "<p class='user-info'>" + data.val().email + "</p>"
+    //             output += "</div>";
+
+    //             display.innerHTML = display.innerHTML + output;
+    //         });
+    //     }
+    // }
+
+    function share(id){
+      firebase.database().ref('documents/'+id+"/document").push({
+        document: localStorage.getItem("file")
+      });
+      alert("Shared");
+    }
+
+  	function myFunction() {
+      var counter = 0;
+    var user_arr = [];
+  var display = document.getElementById("friends");
+    var ref = firebase.database().ref().child('users');
+    
+    // Loop through to fill arr with names and print them to screen
+    ref.orderByChild("username").on("child_added", function(data) {
+        user_arr[counter] = data.val().username;
+        
+        output = "";
+        
+        output += "<div class='users'>";
+        output += "<p class='username' onclick=\"share('"+ data.val().id + "')\">" + user_arr[counter] + "</p>"
+        output += "</div>";
+        
+        display.innerHTML = display.innerHTML + output;
+        
+        counter += 1;
+    })
+
+      var popup = document.getElementById("myPopup");
+      popup.classList.toggle("show");
+    }
 		function goback(){
 		  window.history.back();
 		}
@@ -35,6 +88,66 @@
 			filter: brightness(80%);
 			transition: 2s;
 		}
+		/* Popup container - can be anything you want */
+    .username{
+      font-size: 1.5vh;
+    }
+.popup {
+margin-bottom: 10vh;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
 	</style>
 <!--     <script src="uploader.js"></script>
  --></html>
