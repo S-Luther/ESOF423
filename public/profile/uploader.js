@@ -43,7 +43,7 @@ function handleFileUploadChange(e) {
 
 function displayFile(dl){
   if(counter>0){
-    document.getElementById("files").innerHTML = document.getElementById("files").innerHTML + "<img src=\"" + dl + "\" style=\"width:25%; height:30vh;\" onerror=\"this.onerror=null;this.src='../images/default.jpg';\">"
+    document.getElementById("files").innerHTML = document.getElementById("files").innerHTML + "<img src=\"" + dl + "\" onclick=\"showfile('"+dl+"')\" style=\"width:25%; height:30vh;\" onerror=\"this.onerror=null;this.src='../images/default.jpg';\">"
   }counter++;
 }
 
@@ -53,6 +53,10 @@ function getUrlVars() {
         vars[key] = value;
     });
     return vars;
+}
+
+function goback(){
+  window.history.back();
 }
 
 function handleFileUploadSubmit(e) {
@@ -77,6 +81,13 @@ function handleFileUploadSubmit(e) {
      window.alert("success");
 
   });
+}
+
+function showfile(file){
+
+  localStorage.setItem("file", file); 
+  window.location.href = "file.html";
+
 }
 
 // var UserD = "";
