@@ -1,0 +1,42 @@
+.form-name {
+  width: 150px;
+}
+
+.form-line{
+    padding-top:12px;
+    padding-bottom:12px;
+}
+
+.demo-list__item {
+  width: 300px;
+  padding: 0px;
+
+}
+
+.mdl-list__item {
+  padding: 0px;
+  height: 25px;
+  min-height: 25px;
+}
+
+.mdl-list__item-primary-content{
+  font-size: 13px;
+  margin: 0px;
+}
+
+.checkbox-label{
+  text-align: left;
+  margin-left: 10px;
+}
+
+.mdl-card__title-text_checkbox{
+  font-size: 16px;
+}
+
+.textfield__seporator{
+  margin-top: 20px;
+}
+
+.mdl-textfield{
+  width: 400px;
+}

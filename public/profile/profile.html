@@ -6,15 +6,19 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/main.css"/>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+        <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        <script src="../firebase_init.js"></script>
+
+				<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
 
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
 	<body class="is-loading-0 is-loading-1">
-
 		<!-- Wrapper -->
 			<div id="wrapper">
 
@@ -30,118 +34,30 @@
 									<p><div id="email">Email: </div><br />
 									<div id="btype">Type: </div><br />
 									<div id="userId">Age: </div><br />
-									<div id="lname">Gender: </div></p>
+									<div id="lname">Gender: </div>
 								</header>
 								<nav id="nav">
 									<ul class="actions vertical special spinY">
-										<li><a href="files.html" onclick="" class="button">Files</a></li>
+										<li><a onclick="gotofiles()" class="button">Files</a></li>
 										<li><a href="../search.html" onclick="" class="button">Search</a></li>
-
+										<li><a href="../forms/basicInfoForm.html" onclick="" class="button">Forms</a></li>
 										<li><a href="https://esof-423.firebaseapp.com/update-info.html?" class="button">Update</a></li>
 										<li><a href="../index.html" onclick="toggleSignIn()" class="button">Sign Out</a></li>
-
 									</ul>
 								</nav>
+                            <div id="addFriend"></div>
+                            <div id="recentReq"></div>
+                            <div id="friendList"></div>
 							</div>
 						</div>
 					</article>
-        <script>
-          // Initialize Firebase
-          var config = {
-            apiKey: "AIzaSyDDsSMQ5fz__zVROPs58rqVnFlkcu15PF8",
-            authDomain: "esof-423.firebaseapp.com",
-            databaseURL: "https://esof-423.firebaseio.com",
-            projectId: "esof-423",
-            storageBucket: "esof-423.appspot.com",
-            messagingSenderId: "991614948455"
-          };
-          firebase.initializeApp(config);
-        </script>
-
-      <script>
-      var id="";
-      function getUrlVars() {
-          var vars = {};
-          var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-              vars[key] = value;
-          });
-          return vars;
-      }
-      
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          id = user.uid;
-        }
-        else{
-          id=getUrlVars()["id"];
-        }
-      });
-
-      function gotofiles(){
-        window.location = 'files.html?id='+getUrlVars()["id"];
-      }
-
-      
-      
-      var url = "https://esof-423.firebaseio.com/users/"+getUrlVars()["id"]+"/";
-      var fname = "username.json";
-      var lname = "gender.json";
-      var btype = "profile_type.json";
-      var email = "email.json";
-      var userId = "age.json";
-      var ppic = "profile_picture.json";
-      
-      ppic= update(url +ppic, "ppic");
-
-      fname= update(url + fname, "fname");
-      lname= update(url +lname, "lname");
-      btype= update(url +btype, "btype");
-      email= update(url +email, "email");
-      userId= update(url +userId, "userId");
-      
-      
-      function update(value, id) {
-          console.log(value);
-
-          fetch(value)
-              .then(response => response.json())
-              .then(data => {
-                  console.log(data);
-                  if(data == null){
-                    document.getElementById(id).innerHTML = "";
-                  }
-                  else if(id == "ppic"){
-                    document.getElementById(id).style = "background-image: url("+data+");";  
-                  }
-                  else{
-                    document.getElementById(id).innerHTML = document.getElementById(id).innerHTML + data;
-                  }
-
-                  return data;
-                  
-        
-              })
-              .catch(err => {
-                console.error('An error ocurred', err);
-
-              })
-      
-      }
-      
-      
-      
-      
-
-      </script>
-
-
-
+            </div>
+        <script src="profile.js"></script>
+        <script src='friendRequest.js'></script>
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-
+        <script src="assets/js/skel.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+        <script src="assets/js/main.js"></script>
 	</body>
 </html>
