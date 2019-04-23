@@ -41,5 +41,5 @@ function search(){
 }
 
 function change() {
-    window.location.href = "profile.html?id="+localStorage.getItem("id");
+    window.location.href = "profile/profile.html?id="+localStorage.getItem("id");
 }
