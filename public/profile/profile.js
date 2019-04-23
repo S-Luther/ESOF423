@@ -45,7 +45,6 @@ if(currentUser==getUrlVars()["id"]) {
     displayRequests();
 }
 else {
-    friendsChecker(getUrlVars()["id"]);
     //Viewing someone elses
     ppic= updateInfo(url +ppic, "ppic");
     fname= updateInfo(url + fname, "fname");
@@ -62,6 +61,7 @@ else {
     document.getElementById("lname").style.display = "none";
     document.getElementById("nav").style.display = "none";
 
+    friendsChecker(getUrlVars()["id"]);
     reqSent(getUrlVars()["id"]);
 }
 
