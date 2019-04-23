@@ -1,9 +1,9 @@
 var expect = require('chai').expect;
 var proxyquire = require('proxyquire');
-var pathStub = { };
-var allLetter = proxyquire('../auth/signupvalidation.js',{:pathStub});
-var userid_validation = proxyquire('../auth/signupvalidation.js',{'../auth/signupvalidation.js':pathStub});
-var ValidateEmail = proxyquire('../auth/signupvalidation.js',{:pathStub});
+var actionStub = { };
+var allLetter = proxyquire('../auth/signupvalidation',{allLetter: actionStub});
+var userid_validation = proxyquire('../auth/signupvalidation',{userid_validation: actionStub});
+var ValidateEmail = proxyquire('../auth/signupvalidation',{ValidateEmail: actionStub});
 /*TODO:
   1.Figure out correct things for path stubs in proxyquire.
   2.Make sure tests run as expected.

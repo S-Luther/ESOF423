@@ -1,9 +1,9 @@
 var expect = require('chai').expect;
 var proxyquire = require('proxyquire');
-var pathStub = { };
-var validAge = proxyquire('../update-validation.js',{:pathStub});
-var validGender = proxyquire('../update-validation.js',{:pathStub});
-var validEmail = proxyquire('../update-validation.js',{:pathStub});
+var actionStub = { };
+var validAge = proxyquire('../update-validation.js',{validAge: actionStub});
+var validGender = proxyquire('../update-validation.js',{validGender: actionStub});
+var validEmail = proxyquire('../update-validation.js',{validEmail: actionStub});
 /*TODO:
   1.Figure out correct things for path stubs in proxyquire.
   2.Make sure tests run as expected.
@@ -31,7 +31,7 @@ describe('#validGender()', function(){
         gender ="This is is one hundred and one characters long, and coming up with long strings like this is not fun.";
         expect(validGender(gender))).to.equal(false);//test case for a gender that is 101 char.
         gender = "female";
-        expect(validGender(gender))).to.equal(true);//test case for gender of female.
+        expect(validGender(gender))).to.equal(true);//test case for a short length gender.
         gender ="";//agender?
         expect(validGender(gender))).to.equal(true);//test case of patient not wanting to disclose their gender.
         gender ="what is gender even?";
