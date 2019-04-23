@@ -118,7 +118,6 @@
 		-ms-transition: color 0.2s ease, border-bottom-color 0.2s ease;
 		transition: color 0.2s ease, border-bottom-color 0.2s ease;
 		text-decoration: none;
-		border-bottom: dotted 1px;
 		color: inherit;
 	}
 
@@ -262,7 +261,7 @@
 		text-align: center;
 	}
 
-	header {
+	/*header {
 		margin: 3em 0;
 	}
 
@@ -309,7 +308,7 @@
 						display: none;
 					}
 
-		}
+		}*/
 
 /* Form */
 
@@ -604,6 +603,7 @@
 /* Image */
 
 	.image {
+		max-height: 100vh;
 		border-radius: 8px;
 		border: 0;
 		display: inline-block;
@@ -611,6 +611,8 @@
 	}
 
 		.image img {
+			max-height: 100vh;
+
 			border-radius: 8px;
 			display: block;
 		}
@@ -1220,7 +1222,8 @@
 			.panel > .image img {
 				border-radius: 0;
 				display: block;
-				height: 100%;
+				height:100%;
+				max-height: 100vh;
 				object-fit: cover;
 				object-position: center;
 				width: 100%;
