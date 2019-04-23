@@ -141,8 +141,8 @@ function friendsChecker(reqId) {
             flag = true;
             
             document.getElementById("addFriend").innerHTML = "<button type='button' disabled>You are already friends</button>";
-            document.getElementById("btype").style.display = "none";
-            document.getElementById("email").style.display = "none";
+            document.getElementById("btype").style.display = "block";
+            document.getElementById("email").style.display = "block";
         });
     });
 }

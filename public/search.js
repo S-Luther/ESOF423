@@ -39,3 +39,7 @@ function search(){
         }
     }
 }
+
+function change() {
+    window.location.href = "profile.html?id="+localStorage.getItem("id");
+}
