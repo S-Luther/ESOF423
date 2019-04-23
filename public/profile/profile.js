@@ -49,6 +49,11 @@ else {
     //Viewing someone elses
     ppic= updateInfo(url +ppic, "ppic");
     fname= updateInfo(url + fname, "fname");
+    lname= updateInfo(url +lname, "lname");
+    btype= updateInfo(url +btype, "btype");
+    email= updateInfo(url +email, "email");
+    userId= updateInfo(url +userId, "userId");
+    
 
     //Hide Info we don't want people seeing
     document.getElementById("btype").style.display = "none";
@@ -136,6 +141,8 @@ function friendsChecker(reqId) {
             flag = true;
             
             document.getElementById("addFriend").innerHTML = "<button type='button' disabled>You are already friends</button>";
+            document.getElementById("btype").style.display = "none";
+            document.getElementById("email").style.display = "none";
         });
     });
 }
@@ -357,7 +364,7 @@ function displayFriends() {
                         var id = snapshot.val().id;
 
                         output += "<div class='friend'>";
-                        output += "<p>"+user_name+"</p>";
+                        output += '<a class="user-info" href="profile.html?id=' + id +'">'+user_name+'</a>'
                         output += "<p>"+role+"</p>";
                         output += '<button type="button" onclick="removeFriend(\''+ id + '\')">Remove Friend</button>';
                         output += "</div>";
