@@ -61,6 +61,7 @@ else {
     document.getElementById("userId").style.display = "none";
     document.getElementById("lname").style.display = "none";
     document.getElementById("nav").style.display = "none";
+    document.getElementById('get-userForm').textContent = "Must be friends to see this information";
 
     friendsChecker(getUrlVars()["id"]);
     reqSent(getUrlVars()["id"]);
