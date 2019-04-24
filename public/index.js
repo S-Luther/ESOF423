@@ -39,7 +39,7 @@ function writeUserData(userId, name, email, imageUrl) {
     }
     document.getElementById("theboi").disabled = false;
 
-    console.log(fireUser.createdAt)
+    // console.log(fireUser.createdAt)
 }
 
 /**
@@ -59,6 +59,7 @@ function initApp() {
         document.getElementById('quickstart-oauthtoken').textContent = 'null';
     }
     var user = result.user;
+    console.log(user.uid);
     localStorage.setItem("lsUser", user);
 
     // calls funtion to write to firebase
