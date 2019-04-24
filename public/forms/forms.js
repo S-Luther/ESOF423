@@ -1,5 +1,16 @@
 
-// initFirebase();
+function change() {
+    window.location.href = "../profile/profile.html?id=" + uid;
+}
+
+function newForm() {
+  window.location.href = "basicInfoForm.html";
+}
+
+function allForms() {
+  window.location.href = "formsLanding.html";
+}
+
 var userID;
 var uid = localStorage.getItem("current_uid");
 
@@ -12,6 +23,8 @@ else {
   userID = uid;
   console.log("Current User: " + userID);
 }
+
+displayForm();
 
 // Save a new recommendation to the database, using the input in the form
 function submitForm() {
@@ -50,15 +63,29 @@ function submitForm() {
   )
 }
 
-  // Get input values from each of the form elements
+function displayForm() {
+  var formData;
+  var ref = firebase.database().ref("/documents/forms/" + uid);
 
+  ref.orderByValue().on("value", function(data) {
 
-  // var bday = document.getElementById("birthDate");
+    //only writes to console. This would be the best way to display
+     data.forEach(function(data) {
+        console.log(data.key + ": " + data.val());
+     });
 
+     //creates a snapshot of the whole form and turns it to a string... Kinda messy
+     ref.on("value", function(snapshot) {
+      console.log(snapshot.val());
+      formData = snapshot.val();
+      var formDataJSON = JSON.stringify(formData, null, "    ");
+      console.log(formDataJSON);
+      document.getElementById('get-userinfo').textContent = formDataJSON;
+     }, function (error) {
+      console.log("Error: " + error.code);
+      });
+    });
 
-  // Push a new recommendation to the database using those values
-  // forms.push({
-  //   firstName: fname,
-  //   lastName: lname,
-  //   // bday: bday
-  // });
+  document.getElementById('get-userinfo').textContent = formData;
+
+}
