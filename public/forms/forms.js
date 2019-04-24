@@ -47,7 +47,7 @@ function submitForm() {
   firebase.database().ref('documents/forms/' + userID).set({
      firstName : fname,
      lastName : lname,
-     bithDay : bday,
+     birthday : bday,
      height: height,
      weight: weight,
      email: email,
@@ -76,10 +76,6 @@ function displayForm() {
         formData2 += data.key + ": " + data.val() + "\n";
      })
      console.log(formData2)
-     document.getElementById('get-userinfo').textContent = formData2;
+     document.getElementById('get-userForm').textContent = formData2;
     });
-
-  // document.getElementById('get-userinfo').textContent = formData;
-
-
 }

@@ -43,6 +43,7 @@ if(currentUser==getUrlVars()["id"]) {
 
     displayFriends();
     displayRequests();
+    displayForm();
 }
 else {
     //Viewing someone elses
@@ -52,7 +53,7 @@ else {
     btype= updateInfo(url +btype, "btype");
     email= updateInfo(url +email, "email");
     userId= updateInfo(url +userId, "userId");
-    
+
 
     //Hide Info we don't want people seeing
     document.getElementById("btype").style.display = "none";
@@ -86,12 +87,12 @@ function friendRequest() {
             alert("Friend Request Sent");
         }
     });
-    
+
     var pendingRef = firebase.database().ref().child("users/"+currentUser+"/friend_req");
-    
+
     var newReq = pendingRef.push();
     var reqKey = newReq.key;
-    
+
     newReq.set({
        req:friendId,
         key: reqKey,
@@ -105,7 +106,7 @@ function friendRequest() {
 
 function reqSent(reqId) {
     console.log("reqSent");
-    
+
     var userId = localStorage.getItem("id");
     var flag = false;
 
@@ -139,7 +140,7 @@ function friendsChecker(reqId) {
     ref.on("value", function(data) {
         ref.orderByChild("friend").equalTo(reqId).on("child_added", function(snapshot) {
             flag = true;
-            
+
             document.getElementById("addFriend").innerHTML = "<button type='button' disabled>You are already friends</button>";
             document.getElementById("btype").style.display = "block";
             document.getElementById("email").style.display = "block";
@@ -168,9 +169,9 @@ function alreadyFriends(reqId) {
 
 function addFriend(reqId) {
     console.log("addFriend");
-    
+
     var currentUser = getUrlVars()["id"];
-    
+
     if (!alreadyFriends(reqId)) {
 
         var userRef = firebase.database().ref().child('users/'+currentUser+"/friend_list");
@@ -226,7 +227,7 @@ function deleteReq(reqId,userId) {
             ref.child(data.val().key+"/pending").remove();
         });
     });
-    
+
     var ref = firebase.database().ref().child('users/'+reqId+"/friend_req");
 
     // Get the most recent request
@@ -282,9 +283,9 @@ function displayRequests() {
             ref.orderByChild("req").on("child_added", function(data) {
                 //For each req display a new req div
                 var reqRef = firebase.database().ref().child('users/'+data.val().req);
-                
+
                 console.log(data.val().pending);
-                
+
                 //If the request is pending
                 if(data.val().pending == "true") {
                     reqRef.on('value', function(snapshot) {
@@ -400,6 +401,22 @@ function updateInfo(value, id) {
   .catch(err => {
     console.error('An error ocurred', err);
   })
+}
+
+function displayForm() {
+  var ref = firebase.database().ref("/documents/forms/" + uid);
+  var formData = "";
+
+  ref.orderByValue().on("value", function(data) {
+
+    //only writes to console. This would be the best way to display
+     data.forEach(function(data) {
+        console.log(data.key + ": " + data.val());
+        formData += data.key + ": " + data.val() + "\n";
+     })
+     console.log(formData)
+     document.getElementById('get-userForm').textContent = formData;
+    });
 }
 
 function change() {
