@@ -58,34 +58,28 @@ function submitForm() {
      medications: medications
   });
 
-  console.log(
-    "sending info to firebase"
-  )
+  console.log("sending info to firebase");
+  window.location.href = "formsLanding.html";
+  alert("Form Successfully Submitted");
 }
 
 function displayForm() {
   var formData;
   var ref = firebase.database().ref("/documents/forms/" + uid);
+  var formData2 = "";
 
   ref.orderByValue().on("value", function(data) {
 
     //only writes to console. This would be the best way to display
      data.forEach(function(data) {
         console.log(data.key + ": " + data.val());
-     });
-
-     //creates a snapshot of the whole form and turns it to a string... Kinda messy
-     ref.on("value", function(snapshot) {
-      console.log(snapshot.val());
-      formData = snapshot.val();
-      var formDataJSON = JSON.stringify(formData, null, "    ");
-      console.log(formDataJSON);
-      document.getElementById('get-userinfo').textContent = formDataJSON;
-     }, function (error) {
-      console.log("Error: " + error.code);
-      });
+        formData2 += data.key + ": " + data.val() + "\n";
+     })
+     console.log(formData2)
+     document.getElementById('get-userinfo').textContent = formData2;
     });
 
-  document.getElementById('get-userinfo').textContent = formData;
+  // document.getElementById('get-userinfo').textContent = formData;
+
 
 }
