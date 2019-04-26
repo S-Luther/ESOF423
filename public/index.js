@@ -28,18 +28,19 @@ function writeUserData(userId, name, email, imageUrl) {
     
     //new method of checking if the user exists
     
-    userRef.orderByChild("id").equalTo(userId).on("child_added", function(snapshot) {
-        if(snapshot==null) {
+    userRef.orderByChild("id").equalTo(userId).on("value", function(data) {
+        if(!data.exists()){
+            console.log("do it");
             firebase.database().ref('users/' + userId).set({
-            username: name,
-            id: userId,
-            email: email,
-            profile_picture : imageUrl,
-            profile_type : "Patient",
-            age : "N/A",
-            gender : "N/A",
-            phone : "phoneNumber"
-        });
+                username: name,
+                id: userId,
+                email: email,
+                profile_picture : imageUrl,
+                profile_type : "Patient",
+                age : "N/A",
+                gender : "N/A",
+                phone : "phoneNumber"
+            });
         }
     });
     
@@ -123,7 +124,6 @@ function initApp() {
         document.getElementById('quickstart-sign-in').disabled = false;
     });
     
-
     document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
     document.getElementById('goToProf').addEventListener('click', change);
 }
