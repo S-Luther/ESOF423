@@ -8,8 +8,11 @@ function getNames(){
     
     // Loop through to fill arr with names
     ref.orderByChild("username").on("child_added", function(data) {
-        user_arr[counter] = data.val().username;
-        counter += 1;
+        if(data.val().username!=""||data.val().username!=undefined) {
+            user_arr[counter] = data.val().username;
+            console.log(user_arr[counter]);
+            counter += 1;
+        }
     })
 }
 
