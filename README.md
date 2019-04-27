@@ -35,7 +35,7 @@ Submit. The doc will be added to your files and can be shared with doctors.
 
 ### Dev Docs
 
-This repository is a firebase based web-app built using primarily JavaScript. All storage for files and our DB is contained with the firebase API and accessed through Firebase sepecifc .js commands.
+This repository is a firebase based web-app built using primarily JavaScript. All storage for files and our DB is contained with the firebase API and accessed through Firebase sepecifc .js commands. The data in the database is stored as JSON objects in one large JSON tree.
 
 Login Authentication occurs in the index.js file, and the site uses authentication through a person's Google account, but could have other authentication added.
 
