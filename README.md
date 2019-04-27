@@ -41,6 +41,8 @@ Login Authentication occurs in the index.js file.
 
 Friend request / accepting requests logic is contained in the profile.js file.
 
+The testing of the site is split into two groups, unit tests written with Mocha, Sinon, Proxyquire, and Istanbul, and tests using Selenium.
+
 
 #### Needs:
 
