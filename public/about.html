@@ -5,11 +5,10 @@
         <meta charset="utf-8">
         <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
 		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-        <script src="firebase_init.js"></script>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        <script src="firebase_init.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-		<link rel="stylesheet" href="css/global.css" type="text/css"/>
-        <link rel="stylesheet" href="css/search.css" type="text/css"/>
+        <link rel="stylesheet" href="css/global.css" type="text/css"/>
     </head>
     <header>
         <div class="container">
@@ -17,21 +16,20 @@
             <ul id="nav">
                 <li><a href="index.html" id="first-link">Sign Out</a></li>
                 <li><a id="goToProf"  onclick="change()">Profile</a></li>
-                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">About</a></li>
             </ul>
             <div class="clear"></div>
         </div>
     </header>
     <body>
         <div class="container">
-            <h2>Search for a user</h2>
-            <div id="searchbar">
-                <input type="text" id="search-input">
-                <button class="searchbutton" value="search" onclick="search()">Search</button>
+            <div class="content">
+                <h1>Contact</h1>
+                <p>This website was made by Matthew Wintersteen, Samuel Luther, Andrew Dixon, and Matthew Hanson for ESOF 423 at MSU Bozeman.</p>
+                <hr>
+                <p>Please feel free to visit our <a href="https://github.com/Quackbar/ESOF423" style="color:black">GitHub</a></p>
             </div>
-            <div id="content"></div>
         </div>
     </body>
-    <script src="search.js"></script>
     <script src="nav.js"></script>
 </html>

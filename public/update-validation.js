@@ -98,7 +98,3 @@ function setRole(){
 function resetForm(){
     document.getElementById("update-form").reset();
 }
-
-function change() {
-    window.location.href = "profile/profile.html?id="+localStorage.getItem("id");
-}
