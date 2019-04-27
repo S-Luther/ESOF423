@@ -1,35 +1,18 @@
-var config = {
-  apiKey: "AIzaSyDDsSMQ5fz__zVROPs58rqVnFlkcu15PF8",
-  authDomain: "esof-423.firebaseapp.com",
-  databaseURL: "https://esof-423.firebaseio.com",
-  projectId: "esof-423",
-  storageBucket: "esof-423.appspot.com",
-  messagingSenderId: "991614948455"
-};
-firebase.initializeApp(config);
-
 var user_arr = [];
 var counter = 0;
 
-displayAll();
+getNames();
 
-function displayAll(){
-    var display = document.getElementById("content");
+function getNames(){
     var ref = firebase.database().ref().child('users');
     
-    // Loop through to fill arr with names and print them to screen
+    // Loop through to fill arr with names
     ref.orderByChild("username").on("child_added", function(data) {
-        user_arr[counter] = data.val().username;
-        
-        output = "";
-        
-        output += "<div class='users'>";
-        output += "<p class='username'>" + user_arr[counter] + "</p>"
-        output += "</div>";
-        
-        display.innerHTML = display.innerHTML + output;
-        
-        counter += 1;
+        if(data.val().username!=""||data.val().username!=undefined) {
+            user_arr[counter] = data.val().username;
+            console.log(user_arr[counter]);
+            counter += 1;
+        }
     })
 }
 

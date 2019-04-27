@@ -1,31 +1,117 @@
-var url = "https://esof-423.firebaseio.com/.json";
-var sendTo = "";
-var content = "{\"userID\":\"valueascsadasd\",\"name\":\"value\",\"email\":\"value@asdasd.asd\"}";
-function update() {
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            document.getElementById("text").innerHTML = data;
-        })
-        .catch(err => {
-            console.error('An error ocurred', err);
-        })
-
+var UserD = "";
+/**
+* Function called when clicking the Login/Logout button.
+*/
+function toggleSignIn() {
+    if (!firebase.auth().currentUser) {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/plus.login');
+        firebase.auth().signInWithRedirect(provider);
+    }
+    else {
+        firebase.auth().signOut();
+        window.location = 'index.html';
+    }
+    document.getElementById('quickstart-sign-in').disabled = true;
 }
 
-function sendToDB() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-         if (this.readyState == 4 && this.status == 200) {
-             alert("Sent");
-         }
-    };
-    xhttp.open("PUT", url.slice(0, url.length-5) + sendTo + ".json", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(content);
+/**
+*  writes user info to the database
+*  called from within initApp funtion for when a user logs in
+*/
+
+function writeUserData(userId, name, email, imageUrl) {
+    var userRef = firebase.database().ref('users/');
+    
+    //new method of checking if the user exists
+    
+    userRef.orderByChild("id").equalTo(userId).on("value", function(data) {
+        if(!data.exists()){
+            console.log("do it");
+            firebase.database().ref('users/' + userId).set({
+                username: name,
+                id: userId,
+                email: email,
+                profile_picture : imageUrl,
+                profile_type : "Patient",
+                age : "N/A",
+                gender : "N/A",
+                phone : "phoneNumber"
+            });
+        }
+    });
+    
+    document.getElementById("theboi").disabled = false;
 }
 
-update();
-//sendToDB();
+/**
+* initApp handles setting up UI event listeners and registering Firebase auth listeners:
+*  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+*    out, and that is where we update the UI.
+*  - firebase.auth().getRedirectResult(): This promise completes when the user gets back from
+*    the auth redirect flow. It is where you can get the OAuth access token from the IDP.
+*/
+function initApp() {
+    
+    firebase.auth().getRedirectResult().then(function(result) {
+    var user = result.user;
+    console.log(user.uid);
+    localStorage.setItem("lsUser", user);
+
+    // calls funtion to write to firebase
+    // this might need to be called from a different location if data is being overwritten
+    
+    writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+    
+    
+    }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+
+        if (errorCode === 'auth/account-exists-with-different-credential') {
+            alert('You have already signed up with a different auth provider for that email.');
+            // If you are using multiple auth providers on your app you should handle linking
+            // the user's accounts here.
+        }
+        else {
+            console.error(error);
+        }
+    });
+    // Listening for auth state changes.
+    // [START authstatelistener]
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            UserD = user.uid;
+            // User is signed in.
+            localStorage.setItem("id", user.uid);
+            writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
+            var providerData = user.providerData;
+
+            document.getElementById('quickstart-sign-in').textContent = 'Sign out';
+
+        }
+        else {
+            document.getElementById('quickstart-sign-in').textContent = 'Sign in with Google';
+        }
+        document.getElementById('quickstart-sign-in').disabled = false;
+    });
+    
+    document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
+    document.getElementById('goToProf').addEventListener('click', change);
+}
+
+window.onload = function() {
+    initApp();
+};

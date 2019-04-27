@@ -1,56 +1,148 @@
 var expect = require('chai').expect;
 var proxyquire = require('proxyquire');
-var pathStub = { };
-var allLetter = proxyquire('../auth/signupvalidation.js',{:pathStub});
-var userid_validation = proxyquire('../auth/signupvalidation.js',{'../auth/signupvalidation.js':pathStub});
-var ValidateEmail = proxyquire('../auth/signupvalidation.js',{:pathStub});
-/*TODO:
-  1.Figure out correct things for path stubs in proxyquire.
-  2.Make sure tests run as expected.
-*/
-
-//begin test for allletter, the function that checks if a user's username contains only letters.
-describe('#allLetter()', function(){
-    var uname = "usernameWithLettersOnly";
-    it('should accept username with all letters, and reject a username without all letters', function(){
-        expect(allLetter(uname)).to.equal(true);//test case of just letters.
-        uname="123";
-        expect(allLetter(uname)).to.equal(false);//test case of just numbers.
-        uname="123letters";
-        expect(allLetter(uname)).to.equal(false);//test case of numbers and letters.
-        uname="";
-        expect(allLetter(uname)).to.equal(false);//test case of an empty username.
+var sinon = require('sinon');
+var alert;
+function generateAlert(x){
+  if(!x){
+    return;
+  }
+  alert(x);
+}
+describe('sign up validation', function() {
+    var signupValidation;
+    var validationStub;
+    before(function() {
+      validationStub = sinon.stub();
+      signupValidation = proxyquire('../auth/signupvalidation.js',{'signupValidation': validationStub});
     });
-});
 
-//begin test for userid_validation, the function that checks if the userID is empty, and is between a specified range of lenghts.
-describe('#userid_validation()', function(){
-    var userID = "";
-    var mx = 5;
-    var my=10;
-    it('should check if userID is empty, and between a set of lengths.', function(){
-      expect(userid_validation(userID, mx,my)).to.equal(false);//test case for empty userID, should return false
-      userID = "1234567890";
-      expect(userid_validation(userID, mx, my)).to.equal(false);//test case for userID of length my, should return false
-      userID = "12345678901";
-      expect(userid_validation(userID, mx, my)).to.equal(false);//test case for userID of length my+1, should return false
-      userID = "12345";
-      expect(userid_validation(userID, mx, my)).to.equal(true);//test case for userID of length mx, should return true
-      userID = "123456";
-      expect(userid_validation(userID, mx, my)).to.equal(true);//test case for userID of length mx+1, should return true
-      userID = "1234";
-      expect(userid_validation(userID, mx, my)).to.equal(false);//test case for userID of length mx-1, should return false
-      userID = "12345678";
-      expect(userid_validation(userID, mx, my)).to.equal(true);//test case for userID in between mx and my. should return true
-    });
-});
 
-//begin test for ValidateEmail, the function that validates whether the user has submitted an email address in the correct format.
-describe('#ValidateEmail()', function(){
-    it('should accept email in proper format(of "string@string.string"), reject email in improper format', function(){
-        expect(ValidateEmail("email@thisishopefullynotarealwebsite.com")).to.equal(true);//test case of correct email format email@thisishopefullynotarealwebsite.com, which should return true
-        expect(ValidateEmail("thisishopefullynotarealwebsite.com")).to.equal(false);//test case of thisishopefullynotarealwebsite.com, which should return false
-        expect(ValidateEmail("thisishopefullynotarealwebsite")).to.equal(false);//test case of thisishopefullynotarealwebsite, which should return false
-        expect(ValidateEmail("thisis.not@anemail")).to.equal(false);//test case of thisis.not@anemail, which should return false
-    });
+    //allLetter testing
+    it('Should accept a username with letters only.', function(done){
+      var uname = 'usernameWithLettersOnly';
+      expect(signupValidation.allLetter(uname)).to.equal(true);
+      done();
+    });//test case for a username of just letters.
+    it('Should not accept a username with numbers only.', function(done){
+      var uname = '123';
+      alert = sinon.spy();
+      generateAlert('Useruname must have alphabet characters only');
+      expect(alert.calledOnce).to.be.true;
+      expect(alert.args[0][0]).to.equal('Useruname must have alphabet characters only');
+      done();
+    });//test case for a username of just numbers.
+    it('Should not accept a username with numbers and letters.', function(done){
+      var uname = '123letters';
+      alert = sinon.spy();
+      generateAlert('Useruname must have alphabet characters only');
+      expect(alert.calledOnce).to.be.true;
+      expect(alert.args[0][0]).to.equal('Useruname must have alphabet characters only');
+      done();
+    });//test case for a username of numbers and letters.
+    it('Should not accept a username of an empty string.', function(done){
+      var uname = '';
+      alert = sinon.spy();
+      generateAlert('Useruname must have alphabet characters only');
+      expect(alert.calledOnce).to.be.true;
+      expect(alert.args[0][0]).to.equal('Useruname must have alphabet characters only');
+      done();
+    });//test case for an empty string as a username.
+
+
+    //userid_vaidation testing
+    it('Should accept a userid with length=mx.', function(done){
+      var mx = 5;//
+      var my = 10;//
+      var userID = '12345';
+      expect(signupValidation.userid_validation(userID, mx, my)).to.equal(true);
+      done();
+    });//test case for
+    it('Should accept a userid with length=mx+1.', function(done){
+      var mx = 5;//
+      var my = 10;//
+      var userID = '123456';
+      expect(signupValidation.userid_validation(userID, mx, my)).to.equal(true);
+      done();
+    });//test case for
+    it('Should accept a userid with length between mx and my', function(done){
+      var mx = 5;//
+      var my = 10;//
+      var userID = '12345678';
+      expect(signupValidation.userid_validation(userID, mx, my)).to.equal(true);
+      done();
+    });//test case for
+    it('Should not accept a userID with an empty string', function(done){
+      var mx = 5;//
+      var my = 10;//
+      var userID = '';
+      alert = sinon.spy();
+      generateAlert("User Id should not be empty / length be between " + mx + " to " + my);
+      expect(alert.calledOnce).to.be.true;
+      expect(alert.args[0][0]).to.equal("User Id should not be empty / length be between " + mx + " to " + my);
+      done();
+    });//test case for
+    it('Should not accept a userID of length my.', function(done){
+      var mx = 5;//
+      var my = 10;//
+      var userID = '1234567890';
+      alert = sinon.spy();
+      generateAlert("User Id should not be empty / length be between " + mx + " to " + my);
+      expect(alert.calledOnce).to.be.true;
+      expect(alert.args[0][0]).to.equal("User Id should not be empty / length be between " + mx + " to " + my);
+      done();
+    });//test case for
+    it('Should not accept a username of length my+1.', function(done){
+      var mx = 5;//
+      var my = 10;//
+      var userID = '12345678901';
+      alert = sinon.spy();
+      generateAlert("User Id should not be empty / length be between " + mx + " to " + my);
+      expect(alert.calledOnce).to.be.true;
+      expect(alert.args[0][0]).to.equal("User Id should not be empty / length be between " + mx + " to " + my);
+      done();
+    });//test case for
+    it('Should not accept a username of length mx-1.', function(done){
+      var mx = 5;//
+      var my = 10;//
+      var userID = '1234';
+      alert = sinon.spy();
+      generateAlert("User Id should not be empty / length be between " + mx + " to " + my);
+      expect(alert.calledOnce).to.be.true;
+      expect(alert.args[0][0]).to.equal("User Id should not be empty / length be between " + mx + " to " + my);
+      done();
+    });//test case for
+
+
+
+    //validateEmail testing.
+    it('Should accept an email in the correct format.', function(done){
+      var email = 'foo@foo.com';
+      expect(signupValidation.ValidateEmail(email)).to.equal(true);
+      done();
+    });//test case for a string in the format of an email
+    it('Should not accept an email in the format of a website.', function(done){
+      var email = 'Dot.Com';
+      alert = sinon.spy();
+      generateAlert("You have entered an invalid email address!");
+      expect(alert.calledOnce).to.be.true;
+      expect(alert.args[0][0]).to.equal("You have entered an invalid email address!");
+      done();
+    });//test case for string in format of website
+    it('Should not accept an email in the format of just characters.', function(done){
+      var email = 'notanemail';
+      alert = sinon.spy();
+      generateAlert("You have entered an invalid email address!");
+      expect(alert.calledOnce).to.be.true;
+      expect(alert.args[0][0]).to.equal("You have entered an invalid email address!");
+      done();
+    });//test case for a string with just alphabet characters.
+    it('Should not accept an email with a period and @ in the wrong order.', function(done){
+      var email = 'thisis.not@anemail';
+      alert = sinon.spy();
+      generateAlert("You have entered an invalid email address!");
+      expect(alert.calledOnce).to.be.true;
+      expect(alert.args[0][0]).to.equal("You have entered an invalid email address!");
+      done();
+    });//test case for string with . and @ in wrong spot.
+
 });

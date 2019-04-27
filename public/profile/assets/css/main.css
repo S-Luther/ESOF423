@@ -118,7 +118,6 @@
 		-ms-transition: color 0.2s ease, border-bottom-color 0.2s ease;
 		transition: color 0.2s ease, border-bottom-color 0.2s ease;
 		text-decoration: none;
-		border-bottom: dotted 1px;
 		color: inherit;
 	}
 
@@ -262,7 +261,7 @@
 		text-align: center;
 	}
 
-	header {
+	/*header {
 		margin: 3em 0;
 	}
 
@@ -309,7 +308,7 @@
 						display: none;
 					}
 
-		}
+		}*/
 
 /* Form */
 
@@ -604,6 +603,7 @@
 /* Image */
 
 	.image {
+		max-height: 100vh;
 		border-radius: 8px;
 		border: 0;
 		display: inline-block;
@@ -611,6 +611,8 @@
 	}
 
 		.image img {
+			max-height: 100vh;
+
 			border-radius: 8px;
 			display: block;
 		}
@@ -1220,7 +1222,8 @@
 			.panel > .image img {
 				border-radius: 0;
 				display: block;
-				height: 100%;
+				height:100%;
+				max-height: 100vh;
 				object-fit: cover;
 				object-position: center;
 				width: 100%;
@@ -1525,3 +1528,62 @@
 		body.is-loading-0 #footer {
 			opacity: 0;
 		}
+
+#recentReq {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+    background-color: azure;
+    box-sizing: border-box;
+}
+
+#recentReq p{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#recentReq a{
+    margin-bottom: 10px;
+}
+
+#friendList {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+    background-color: rgba(0,255,0,.2);
+    box-sizing: border-box;
+}
+
+#friendList p{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#friendList a{
+    margin-bottom: 10px;
+}
+
+#x-button {
+    float: right;
+    margin-right: 6px;
+}
+
+.req {
+    background-color: rgba(0,0,255,.05);
+    margin-left: auto;
+    margin-right: auto;
+    margin: 10px;
+    border: 1px solid rgba(0,0,0,.25);
+    box-sizing: border-box;
+}
+
+.friend {
+    background-color: rgba(0,0,255,.05);
+    margin-left: auto;
+    margin-right: auto;
+    margin: 10px;
+    border: 1px solid rgba(0,0,0,.25);
+    box-sizing: border-box;
+}

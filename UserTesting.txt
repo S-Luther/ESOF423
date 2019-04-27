@@ -1,0 +1,4 @@
+
+I asked the user to explore the website and do what felt right. 
+
+The user is Steve Salgan, a Biochem student.Signed up for an account via Google, got sent to homepage, then went to fill out medical form.Prompted the user to go to the search page.He tried to click on the users as they are displayed when you load the page.Searched for a user and clicked their name link. Clicked the add friend button on their profile.Prompted the user to go to the files page.Chose a file and uploaded it. Said "Nice".I learned that we need to tell the user when something submits or changes.

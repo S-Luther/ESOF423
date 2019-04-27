@@ -1,43 +1,100 @@
-var config = {
-  apiKey: "AIzaSyDDsSMQ5fz__zVROPs58rqVnFlkcu15PF8",
-  authDomain: "esof-423.firebaseapp.com",
-  databaseURL: "https://esof-423.firebaseio.com",
-  projectId: "esof-423",
-  storageBucket: "esof-423.appspot.com",
-  messagingSenderId: "991614948455"
-};
-
-firebase.initializeApp(config);
-
 document.querySelector('.role-button').addEventListener('click', setRole);
 
-function setRole(){
-    var userId = firebase.auth().currentUser.uid;
-    var database = firebase.database();
+function updateInfo(){
+    var email = document.getElementById("email").value;
+    var age = document.getElementById("age").value;
+    var gender = document.getElementById("gender").value;
     
-    let userRef = database.ref('users/'+userId);
-    
-    role = 'Patient';
-    
-    if (document.getElementById('doctor').checked){
-        role = 'Doctor'
-    }
-    userRef.update({'profile_type':role})
-}
-
-function updateEmail(){
     var userId = firebase.auth().currentUser.uid;
     var userRef = firebase.database().ref('users/'+userId);
     
-    var emailRegex = ^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$;
-    
-    var email = document.getElementById("email").value;
-    
-    if(email.value.match(emailRegex)) {
-        userRef.update({'email':email});
+    if(email!=""&&validEmail(email)){
+        updateEmail(userRef,email);
+    }
+    if(age!=""&&validAge(age)){
+        updateAge(userRef,age);
+    }
+    if(gender!=""&&validGender(gender)){
+        updateGender(userRef,gender);
+    }
+}
+
+function validGender(gender){
+    //The smallest bit of data sanitation
+    if(gender.length<100){
+        return true;
+    }
+    else{
+        alert("Quite a large gender you got there");
+        return false;
+    }
+}
+
+function validAge(age){
+    //Can't have a neg age
+    if(age>=0){
+        return true;
+    }
+    else{
+        alert("Age cannot be less than 0")
+        return false;
+    }
+}
+
+function validEmail(email) {
+    //Just making sure the email is in the form string@string.string
+    var emailRegex = /\S+@\S+\.\S+/;
+    if(email==null){
+        return false;
+    }
+    if(emailRegex.test(email)) {
+        return true;
     }
     else {
         alert('Email Format Error');
+        return false;
     }
+}
+
+function updateEmail(userRef,email){
+    userRef.update({'email':email}); 
+    alert("Updated Email");
+    resetForm();
+}
+function updateAge(userRef,age){
+    userRef.update({'age':age}); 
+    alert("Updated Age");
+    resetForm();
+}
+function updateGender(userRef,gender){
+    userRef.update({'gender':gender});
+    alert("Updated Gender");
+    resetForm(); 
+}
+function updateRole(userRef,role){
+    userRef.update({'profile_type':role});
+    alert("Updated Role");
+}
+
+function setRole(){
+    var userId = firebase.auth().currentUser.uid;
+    var userRef = firebase.database().ref('users/'+userId);
     
+    role = '';
+    
+    if (document.getElementById('doctor').checked){
+        role = 'Doctor'
+        updateRole(userRef,role);
+    }
+    else if(document.getElementById('patient').checked){
+        role = 'Patient'
+        updateRole(userRef,role);
+    }
+    else{
+        alert("Please select a role");
+    }
+}
+
+function resetForm(){
+    document.getElementById("update-form").reset();
 }

@@ -6,6 +6,7 @@
         <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
 		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        <script src="firebase_init.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <link rel="stylesheet" href="css/global.css" type="text/css"/>
 		<link rel="stylesheet" href="css/update.css" type="text/css"/>
@@ -14,28 +15,36 @@
         <div class="container">
             <img src="images/logo.png" id="logo">
             <ul id="nav">
-                <li><a href="index.html" id="first-link">Home</a></li>
-                <li><a href="">Profile</a></li>
-                <li><a href="">Contact</a></li>
+                <li><a href="index.html" id="first-link">Sign Out</a></li>
+                <li><a id="goToProf"  onclick="change()">Profile</a></li>
+                <li><a href="about.html">About</a></li>
             </ul>
             <div class="clear"></div>
         </div>
     </header>
     <body>
-      <h1>Update Information</h1>
-        <form name='role'>
-            <input type="radio" name="role" id='patient' value="patient"> Patient<br>
-            <input type="radio" name="role" id='doctor' value="doctor"> Doctor<br>
-        </form>
-        <button class="role-button" value="roleSubmit" onclick="setRole()">Submit</button>
-      <form name='update'>
-          <ul>
-            <li><label for="email">Update Email:</label></li>
-            <li><input type="email" id="email"/></li>
-            </ul>
-        </form>
-        <div class="clear"></div>
-        <button value="submit" onclick="updateEmail()">Submit</button>
+        <div class="container">
+          <h1>Update Information</h1>
+            <form name='role' id="role-form">
+                <input type="radio" name="role" id='patient' value="patient"> Patient<br>
+                <input type="radio" name="role" id='doctor' value="doctor"> Doctor<br>
+            </form>
+            <button class="role-button" value="roleSubmit" onclick="setRole()">Submit</button>
+            <h3>Enter new information</h3>
+            <form name='update' id="update-form">
+                <ul>
+                    <li><label for="email">Email:</label></li>
+                    <li><input type="email" id="email"/></li>
+                    <li><label for="age">Age:</label></li>
+                    <li><input type="number" id="age" min="0"/></li>
+                    <li><label for="email">Gender:</label></li>
+                    <li><input type="text" id="gender"/></li>
+                </ul>
+            </form>
+            <div class="clear"></div>
+            <button value="submit" onclick="updateInfo()">Submit</button>
+        </div>
     </body>
     <script src="update-validation.js"></script>
+    <script src="nav.js"></script>
 </html>
