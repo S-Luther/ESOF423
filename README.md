@@ -37,7 +37,7 @@ Submit. The doc will be added to your files and can be shared with doctors.
 
 This repository is a firebase based web-app built using primarily JavaScript. All storage for files and our DB is contained with the firebase API and accessed through Firebase sepecifc .js commands.
 
-Login Authentication occurs in the index.js file.
+Login Authentication occurs in the index.js file, and the site uses authentication through a person's Google account, but could have other authentication added.
 
 Friend request / accepting requests logic is contained in the profile.js file.
 
